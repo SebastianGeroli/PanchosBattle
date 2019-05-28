@@ -41,8 +41,9 @@ public class Board : MonoBehaviour
         Tile newTile = Instantiate(tilePrefab, tilesContainer);
         newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
         newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(coordinates.x, coordinates.y, 0));
-        newTile.Coordinates = coordinates;
 
+        newTile.Board = this;
+        newTile.Coordinates = coordinates;
 
         tiles.Add(coordinates, newTile);
         return newTile;

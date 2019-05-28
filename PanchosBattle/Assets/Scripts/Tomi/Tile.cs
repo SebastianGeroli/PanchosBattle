@@ -28,6 +28,7 @@ public class Tile : MonoBehaviour
     public int SpawneableForPlayerNumber { get => spawneableForPlayerNumber; set => spawneableForPlayerNumber = value; }
     public bool CanSpawn => spawneableForPlayerNumber > 0;
 
+    public Board Board { get; internal set; }
     public Vector2Int Coordinates { get; internal set; }
 
 }
