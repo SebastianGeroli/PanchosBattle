@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,6 +13,12 @@ public class Board : MonoBehaviour
 
 
     private Dictionary<Vector2Int, Tile> tiles = new Dictionary<Vector2Int, Tile>();
+
+    private ReadOnlyDictionary<Vector2Int, Tile> tilesDictionary = null;
+    public ReadOnlyDictionary<Vector2Int, Tile> TilesDictionary =>
+        tilesDictionary ?? (tilesDictionary = new ReadOnlyDictionary<Vector2Int, Tile>(tiles));
+
+    public int UsedTilesCount => tiles.Count;
     public Tile this[Vector2Int coordinates] => tiles[coordinates];
 
 
