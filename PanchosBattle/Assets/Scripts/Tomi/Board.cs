@@ -11,22 +11,14 @@ public class Board : MonoBehaviour
     private Transform tilesContainer = default;
 
 
-    #region Testing
-    // Temporary, for testing
-    [Header("Testing values")]
-
-    public Vector2Int startSize = Vector2Int.one;
-
-    //public Unit unitPrefab;
-    //public Vector2Int[] unitPositions = new Vector2Int[0];
-    #endregion
-
-
     private Dictionary<Vector2Int, Tile> tiles = new Dictionary<Vector2Int, Tile>();
-    public Tile this[Vector2Int position] => tiles[position];
+    public Tile this[Vector2Int coordinates] => tiles[coordinates];
 
 
     private Grid grid;
+
+
+    public bool HasTile(Vector2Int coordinates) => tiles.ContainsKey(coordinates);
 
 
     private void Awake()
@@ -34,35 +26,25 @@ public class Board : MonoBehaviour
         grid = GetComponent<Grid>();
     }
 
-    private void Start()
-    {
-        CreateBoard(startSize);
 
-        /*
-        foreach (Vector2Int position in unitPositions)
-        {
-            Debug.Log($"");
-            Unit newUnit = Instantiate(unitPrefab);
-            GetTile(position).CurrentUnit = newUnit;
-        }
-        */
+    public void CreateBoard(IEnumerable<Vector2Int> coordinates)
+    {
+        foreach (Vector2Int coordinate in coordinates)
+            CreateTile(coordinate);
     }
 
-    private void CreateBoard(Vector2Int size)
+    public Tile CreateTile(Vector2Int coordinates)
     {
-        for (int y = -size.y; y < size.y; y++)
-        {
-            for (int x = -size.x; x < size.x; x++)
-            {
-                Vector2Int position = new Vector2Int(x, y);
-                Tile newTile = Instantiate(tilePrefab, tilesContainer);
-                newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(x, y, 0));
-                newTile.Coordinates = position;
+        if (HasTile(coordinates))
+            return this[coordinates];
 
-                newTile.name = $"Tile ({x}, {y})";
+        Tile newTile = Instantiate(tilePrefab, tilesContainer);
+        newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(coordinates.x, coordinates.y, 0));
+        newTile.Coordinates = coordinates;
 
-                tiles.Add(position, newTile);
-            }
-        }
+        newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
+
+        tiles.Add(coordinates, newTile);
+        return newTile;
     }
 }
