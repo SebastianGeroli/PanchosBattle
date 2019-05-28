@@ -39,12 +39,22 @@ public class Board : MonoBehaviour
             return this[coordinates];
 
         Tile newTile = Instantiate(tilePrefab, tilesContainer);
+        newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
         newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(coordinates.x, coordinates.y, 0));
         newTile.Coordinates = coordinates;
 
-        newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
 
         tiles.Add(coordinates, newTile);
+        return newTile;
+    }
+
+    public Tile CreateTile(Vector2Int coordinates, Tile.Info info)
+    {
+        Tile newTile = CreateTile(coordinates);
+
+        newTile.TileType = info.type;
+        newTile.SpawneableForPlayerNumber = info.spawneableForPlayerNumber;
+
         return newTile;
     }
 }
