@@ -8,11 +8,16 @@ public class BoardController:MonoBehaviour {
 	float tiempoRestante;
 	int turnoPlayer, turnoGeneral;
 	int nextRoyale;
+	private Units unidadDestino;
+	private Units unidadSeleccionada;
+
 	/*############################## Getters && Setters ##############################*/
 	public int TurnoPlayer { get => turnoPlayer; set => turnoPlayer = value; }
 	public int TurnoGeneral { get => turnoGeneral; set => turnoGeneral = value; }
 	public float TiempoRestante { get => tiempoRestante; set => tiempoRestante = value; }
 	public int NextRoyale { get => nextRoyale; set => nextRoyale = value; }
+	public Units UnidadSeleccionada { get => unidadSeleccionada; set => unidadSeleccionada = value; }
+	public Units UnidadDestino { get => unidadDestino; set => unidadDestino =  value ; }
 
 	/*############################## Metodos ##############################*/
 	private void Update() {
@@ -128,11 +133,24 @@ public class BoardController:MonoBehaviour {
 	public void GetInfoOnClick() {
 		if( Input.GetMouseButtonDown( 0 ) ) {
 			RaycastHit2D hit2D = Physics2D.Raycast( Camera.main.ScreenToWorldPoint( Input.mousePosition ) , Vector2.zero );
-			if( hit2D.collider != null ) {
+			if( hit2D.collider != null && hit2D.collider.tag == "Units") {
+				if( UnidadSeleccionada == null ) {
+					UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
+				} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador ) {
+					UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
+				} else {
+					UnidadDestino = hit2D.collider.GetComponent<Units>();
+				}
 				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
 			
 
+		}
+	}
+	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
+	public void CheckearVidaUnidad() {
+		if( unidadDestino.Vida <= 0 ) {
+			unidadDestino.enabled = false;
 		}
 	}
 }
