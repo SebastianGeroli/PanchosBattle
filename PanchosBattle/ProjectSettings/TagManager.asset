@@ -3,13 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-<<<<<<< HEAD
-  - Board
-=======
-  - Units
-  - Tiles
->>>>>>> test2map
+  tags: []
   layers:
   - Default
   - TransparentFX
