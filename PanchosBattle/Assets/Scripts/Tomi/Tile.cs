@@ -28,7 +28,15 @@ public class Tile : MonoBehaviour
     public int SpawneableForPlayerNumber { get => spawneableForPlayerNumber; set => spawneableForPlayerNumber = value; }
     public bool CanSpawn => spawneableForPlayerNumber > 0;
 
+    [SerializeField]
+    private SpriteRenderer highlightSprite = default;
+    public Color HighlightColor { get => highlightSprite.color; set => highlightSprite.color = value; }
+
+
     public Board Board { get; internal set; }
     public Vector2Int Coordinates { get; internal set; }
+
+
+    public void HideHighlight() => HighlightColor = Color.clear;
 
 }
