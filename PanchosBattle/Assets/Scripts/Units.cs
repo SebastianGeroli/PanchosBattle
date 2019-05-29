@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(Tilemap))]
 public class Units:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	int vida, 
@@ -56,7 +58,19 @@ public class Units:MonoBehaviour {
 	/*############################## Metodos ##############################*/
 	public void MostrarRangoDeMovimiento() {
 		int rango = this.movimiento;
-		
+		int x = this.posX;
+		int y = this.posY;
+		Board tilemap = GetComponent<Board>();
+
+		BoundsInt bounds = tilemap.cellBounds;
+		for (int i = bounds.xMin; x < x+rango; x++){
+			for (int j=bounds.yMin; y< y+rango; y++){
+				if (tilemap.HasTile(new Vector3Int(i,j,0))){
+					Tile mov_tile = tilemap[new Vector2Int(i,j)];
+					mov_tile.color = Color.green;
+				}
+			}
+		}
 	}
 	public void MostrarRangoDeAtaque(){
 
