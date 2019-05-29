@@ -7,14 +7,15 @@ public class Map:MonoBehaviour {
 	int columnas, filas;
 	[SerializeField]
 	bool useRandom;
-	Tile[,] tiles;
+	private Tile[,] tiles;
 	/*############################## Getters && Setters ##############################*/
 	public int Columnas { get => columnas; set => columnas = value; }
 	public int Filas { get => filas; set => filas =  value ; }
+	public Tile[,] Tiles { get => tiles; set => tiles =  value ; }
 
 	/*############################## Metodos ##############################*/
 	public void Awake() {
-		tiles = new Tile[Columnas , Filas];
+		Tiles = new Tile[Columnas , Filas];
 	}
 	public void GeneradorMapa() {
 

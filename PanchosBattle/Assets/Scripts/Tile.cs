@@ -9,6 +9,8 @@ public class Tile:MonoBehaviour {
 	/*############################## Getters && Setters ##############################*/
 	public int PosX { get => posX; set => posX = value; }
 	public int PosY { get => posY; set => posY =  value ; }
+	public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer =  value ; }
+
 	/*############################## Constructor ##############################*/
 	public Tile(int x,int y,TipoDeSuelo tipoDeSuelo) {
 
