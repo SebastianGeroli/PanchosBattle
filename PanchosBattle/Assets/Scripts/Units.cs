@@ -94,10 +94,14 @@ public class Units:MonoBehaviour {
 		List<Tile> clickable_tiles = new List<Tile>();
 
 		Vector2Int[] comparador = (y % 2 == 0) ? extra_par : extra_impar;
+		for (int aux = 0; aux < rango; aux++)
+		{
+			
+		}
 		for (int i = -1; i <= 1; i++)
 		{
 			for (int j = -1; j <= 1; j++)
-			{
+			{ 	
 				pos_tile=new Vector2Int(x+i,y+j);
 				if (board.HasTile(pos_tile) & !((FindExtra(comparador,pos_tile))))
 				{
@@ -109,6 +113,7 @@ public class Units:MonoBehaviour {
 			}
 		}
 	}
+
 }
 public enum TipoUnidad {
 	Jinete = 0,
