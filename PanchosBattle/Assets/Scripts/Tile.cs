@@ -1,35 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Tile:MonoBehaviour {
-	/*############################## Variables ##############################*/
-	int posX, posY;
-	SpriteRenderer spriteRenderer;
-	/*############################## Getters && Setters ##############################*/
-	public int PosX { get => posX; set => posX = value; }
-	public int PosY { get => posY; set => posY =  value ; }
-	public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer =  value ; }
 
-	/*############################## Constructor ##############################*/
-	public Tile(int x,int y,TipoDeSuelo tipoDeSuelo) {
+    public class Tile : MonoBehaviour
+    {
+        [System.Serializable]
+        public struct Info
+        {
+            public Type type;
+            public int spawneableForPlayerNumber;
 
-	}
-	/*############################## Metodos ##############################*/
-	public void SetSprite() {
+            public Info(Type type, int spawneableForPlayerNumber)
+            {
+                this.type = type;
+                this.spawneableForPlayerNumber = spawneableForPlayerNumber;
+            }
+        }
 
-	}
-	public void SetSprite(TipoDeSuelo tipoDeSuelo) {
+        public enum Type { Walkable, NonWalkable }
 
-	}
-}
-//Enum que sirve para diferenciar que tipo de piso se va a utilizar
-public enum TipoDeSuelo {
-    Spawn = 0,
-    Caminable = 1,
-    NoCaminable = 2,
-    Agua = 3,
-    Deco1 = 4,
-    Deco2 = 5,
-    Deco3 = 6
-}
+
+        [SerializeField]
+        private Type tileType = Type.Walkable;
+        public Type TileType { get => tileType; set => tileType = value; }
+
+        [SerializeField]
+        private int spawneableForPlayerNumber = 0;
+        public int SpawneableForPlayerNumber { get => spawneableForPlayerNumber; set => spawneableForPlayerNumber = value; }
+        public bool CanSpawn => spawneableForPlayerNumber > 0;
+
+        [SerializeField]
+        private SpriteRenderer highlightSprite = default;
+        public Color HighlightColor { get => highlightSprite.color; set => highlightSprite.color = value; }
+
+        public Board Board { get; internal set; }
+        public Vector2Int Coordinates { get; internal set; }
+
+
+        public void HideHighlight() => HighlightColor = Color.clear;
+
+    }

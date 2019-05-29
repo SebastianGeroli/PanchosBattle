@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Game.Board.Generation
-{
     [RequireComponent(typeof(Tilemap))]
     public class TilemapToBoardGenerator : MonoBehaviour
     {
@@ -63,4 +61,3 @@ namespace Game.Board.Generation
                 gameObject.SetActive(false);
         }
     }
-}

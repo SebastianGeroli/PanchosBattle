@@ -3,13 +3,15 @@
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	public Player[] jugadores;
-	public Map mapa;
 	BattleRoyale battleRoyale = new BattleRoyale();
 	float tiempoRestante;
 	int turnoPlayer, turnoGeneral;
 	int nextRoyale;
 	private Units unidadDestino;
+	[SerializeField]
 	private Units unidadSeleccionada;
+	[SerializeField]
+	private GameObject tileSeleccionada;
 
 	/*############################## Getters && Setters ##############################*/
 	public int TurnoPlayer { get => turnoPlayer; set => turnoPlayer = value; }
@@ -17,7 +19,7 @@ public class BoardController:MonoBehaviour {
 	public float TiempoRestante { get => tiempoRestante; set => tiempoRestante = value; }
 	public int NextRoyale { get => nextRoyale; set => nextRoyale = value; }
 	public Units UnidadSeleccionada { get => unidadSeleccionada; set => unidadSeleccionada = value; }
-	public Units UnidadDestino { get => unidadDestino; set => unidadDestino =  value ; }
+	public Units UnidadDestino { get => unidadDestino; set => unidadDestino = value; }
 
 	/*############################## Metodos ##############################*/
 	private void Update() {
@@ -28,6 +30,15 @@ public class BoardController:MonoBehaviour {
 		TurnoGeneral = 0;
 		TurnoPlayer = 3;
 		NextRoyale = 10;
+	}
+	/*copiar direccion de una a otra*/
+	public void SetearPosUnidad(){
+		if( unidadSeleccionada != null && tileSeleccionada != null ) {
+			Debug.Log( "entree" );
+			unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
+			unidadSeleccionada = null;
+			tileSeleccionada = null;
+		}
 	}
 	/*Le asinga su numero de player a cada jugador en el array*/
 	public void SetPlayerNumero() {
@@ -83,9 +94,9 @@ public class BoardController:MonoBehaviour {
 	 * se destruyen */
 	public void EsBattleRoyale() {
 		if( NextRoyale - TurnoGeneral <= 2 ) {
-			battleRoyale.MostrarIndicador( mapa.Tiles );
+			battleRoyale.MostrarIndicador(  );
 		} else if( NextRoyale - TurnoGeneral <= 2 ) {
-			battleRoyale.DestruirTiles( mapa.Tiles );
+			battleRoyale.DestruirTiles( );
 			NextRoyale += 4;
 		}
 
@@ -97,11 +108,6 @@ public class BoardController:MonoBehaviour {
 	/*Al terminar el turno de cada juego los colores se resetean para 
 	 * que se vea todo de forma original*/
 	public void ResetearColores() {
-		for( int x = 0; x < mapa.Tiles.GetLength( 0 ); x++ ) {
-			for( int y = 0; y < mapa.Tiles.GetLength( 1 ); y++ ) {
-				mapa.Tiles[x , y].SpriteRenderer.color = Color.white;
-			}
-		}
 	}
 	/*Al terminar el turno se resetean las acciones de todas las unidades 
 	 * para que se puedan mover nuevamente en el proximo turno */
@@ -143,7 +149,11 @@ public class BoardController:MonoBehaviour {
 				}
 				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
-			
+			if( hit2D.collider != null && hit2D.collider.tag == "Tiles" ) {
+				tileSeleccionada = hit2D.collider.GetComponent<GameObject>();
+				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
+				SetearPosUnidad();
+			}
 
 		}
 	}

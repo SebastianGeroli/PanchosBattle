@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Board
-{
+
     [RequireComponent(typeof(Grid))]
     public class Board : MonoBehaviour
     {
@@ -96,4 +95,3 @@ namespace Game.Board
             return newTile;
         }
     }
-}

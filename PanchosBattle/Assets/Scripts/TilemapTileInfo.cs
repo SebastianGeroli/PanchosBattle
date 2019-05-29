@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Game.Board.Generation
-{
+
     [CreateAssetMenu(fileName = "New Board Tile", menuName = "Board Tile")]
     public class TilemapTileInfo : TileBase
     {
@@ -28,4 +27,3 @@ namespace Game.Board.Generation
             tileData.transform = Matrix4x4.Scale(scale);
         }
     }
-}
