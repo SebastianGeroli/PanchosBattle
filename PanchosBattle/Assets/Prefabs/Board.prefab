@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 352557725052711207}
   - component: {fileID: 8250866102472541998}
-  - component: {fileID: 8628680504685437930}
+  - component: {fileID: 2753826839985920992}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -44,7 +44,7 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
   m_CellSwizzle: 0
---- !u!114 &8628680504685437930
+--- !u!114 &2753826839985920992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,9 +53,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6437042016467147652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c727bbc9fb978bb4b9e035e264ef3555, type: 3}
+  m_Script: {fileID: 11500000, guid: 02c167480d3c68944ab34cf44f463715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 8033501737754794838, guid: 6f5431e7bd65aad498e99382a9b230fd,
-    type: 3}
-  tilesContainer: {fileID: 352557725052711207}
+  tilePrefab: {fileID: 0}
+  tilesContainer: {fileID: 0}

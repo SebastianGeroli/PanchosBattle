@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832243444104650218}
-  - component: {fileID: 1832243444104650223}
   - component: {fileID: 1832243444104650216}
   - component: {fileID: 1832243444104650217}
+  - component: {fileID: 8101992823018685177}
   m_Layer: 0
   m_Name: Tilemap Generator
   m_TagString: Untagged
@@ -33,20 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1832243444104650223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832243444104650219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f131ebdefaeeca488926f485a8eec03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillBoard: {fileID: 0}
-  destroyOnGeneration: 1
 --- !u!1839735485 &1832243444104650216
 Tilemap:
   m_ObjectHideFlags: 0
@@ -1624,3 +1610,17 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &8101992823018685177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832243444104650219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87c91386e0a3f94d9e7c67951bd566e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillBoard: {fileID: 0}
+  destroyOnGeneration: 1
