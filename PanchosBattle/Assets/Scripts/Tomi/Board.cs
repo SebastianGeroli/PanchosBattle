@@ -13,16 +13,12 @@ public class Board : MonoBehaviour
 
     //tiles es un diccionario que contiene cad tile con sus coordenadas
     private Dictionary<Vector2Int, Tile> tiles = new Dictionary<Vector2Int, Tile>();
-<<<<<<< HEAD
-    //metodo para obtener una tile a partir de sus coordenadas?
-=======
 
     private ReadOnlyDictionary<Vector2Int, Tile> tilesDictionary = null;
     public ReadOnlyDictionary<Vector2Int, Tile> TilesDictionary =>
         tilesDictionary ?? (tilesDictionary = new ReadOnlyDictionary<Vector2Int, Tile>(tiles));
-
+        
     public int UsedTilesCount => tiles.Count;
->>>>>>> master
     public Tile this[Vector2Int coordinates] => tiles[coordinates];
 
     private Grid grid;
@@ -49,19 +45,11 @@ public class Board : MonoBehaviour
             return this[coordinates];
 
         Tile newTile = Instantiate(tilePrefab, tilesContainer);
-<<<<<<< HEAD
-        //obtiene las coordenadas centrales de una celda en un espacio local. Para que?
-        newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(coordinates.x, coordinates.y, 0));
-        newTile.Coordinates = coordinates;
-        
-        newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
-=======
         newTile.name = $"Tile ({coordinates.x}, {coordinates.y})";
         newTile.transform.localPosition = grid.GetCellCenterLocal(new Vector3Int(coordinates.x, coordinates.y, 0));
 
         newTile.Board = this;
         newTile.Coordinates = coordinates;
->>>>>>> master
 
         //esto es re ilegal 
         tiles.Add(coordinates, newTile);

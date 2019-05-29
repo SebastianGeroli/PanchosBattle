@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Tilemap))]
 public class Units:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	int vida, 
@@ -57,23 +56,58 @@ public class Units:MonoBehaviour {
 	public int PerteneJugador { get => perteneJugador; set => perteneJugador =  value ; }
 	/*############################## Metodos ##############################*/
 	public void MostrarRangoDeMovimiento() {
-		int rango = this.movimiento;
+
+	}
+	
+	private bool FindExtra(Vector2Int[] casos_extra,Vector2Int vector){
+		for (int i=0;i<casos_extra.Length;i++){
+			if(casos_extra[i]==vector){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void MostrarRangoDeAtaque(){
+		int rango = this.rangoAtaque;
 		int x = this.posX;
 		int y = this.posY;
-		Board tilemap = GetComponent<Board>();
 
-		BoundsInt bounds = tilemap.cellBounds;
-		for (int i = bounds.xMin; x < x+rango; x++){
-			for (int j=bounds.yMin; y< y+rango; y++){
-				if (tilemap.HasTile(new Vector3Int(i,j,0))){
-					Tile mov_tile = tilemap[new Vector2Int(i,j)];
-					mov_tile.color = Color.green;
+		Board board = GameObject.FindWithTag("Board").GetComponent<Board>();
+
+		Tile mov_tile = board[new Vector2Int(x,y)];
+		var tile_color = mov_tile.transform.Find("Outline/Fill").GetComponent<SpriteRenderer>();
+		tile_color.color = Color.green;
+
+		//estos son los casos que no son parte del perimetro del hexagono principal 
+		Vector2Int[] extra_par = new Vector2Int[3];
+		extra_par[0]=new Vector2Int(x,y);
+		extra_par[1]=new Vector2Int(x+1,y+1);
+		extra_par[2]=new Vector2Int(x+1,y-1);
+		
+		Vector2Int[] extra_impar = new Vector2Int[3];
+		extra_impar[0]=new Vector2Int(x-1,y-1);
+		extra_impar[1]=new Vector2Int(x-1,y+1);
+		extra_impar[2]=new Vector2Int(x,y);
+		
+		Vector2Int pos_tile;
+		List<Tile> clickable_tiles = new List<Tile>();
+
+		Vector2Int[] comparador = (y % 2 == 0) ? extra_par : extra_impar;
+		for (int i = -1; i <= 1; i++)
+		{
+			for (int j = -1; j <= 1; j++)
+			{
+				pos_tile=new Vector2Int(x+i,y+j);
+				if (board.HasTile(pos_tile) & !((FindExtra(comparador,pos_tile))))
+				{
+					Tile click_tile = board[new Vector2Int(x+i,y+j)]; 
+					tile_color = click_tile.transform.Find("Outline/Fill").GetComponent<SpriteRenderer>();
+					clickable_tiles.Add(click_tile);
+					tile_color.color = Color.red;
 				}
 			}
 		}
-	}
-	public void MostrarRangoDeAtaque(){
-
 	}
 }
 public enum TipoUnidad {
