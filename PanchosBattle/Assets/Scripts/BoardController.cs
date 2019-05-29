@@ -9,7 +9,10 @@ public class BoardController:MonoBehaviour {
 	int turnoPlayer, turnoGeneral;
 	int nextRoyale;
 	private Units unidadDestino;
+	[SerializeField]
 	private Units unidadSeleccionada;
+	[SerializeField]
+	private Tile2 tileSeleccionada;
 
 	/*############################## Getters && Setters ##############################*/
 	public int TurnoPlayer { get => turnoPlayer; set => turnoPlayer = value; }
@@ -17,17 +20,27 @@ public class BoardController:MonoBehaviour {
 	public float TiempoRestante { get => tiempoRestante; set => tiempoRestante = value; }
 	public int NextRoyale { get => nextRoyale; set => nextRoyale = value; }
 	public Units UnidadSeleccionada { get => unidadSeleccionada; set => unidadSeleccionada = value; }
-	public Units UnidadDestino { get => unidadDestino; set => unidadDestino =  value ; }
+	public Units UnidadDestino { get => unidadDestino; set => unidadDestino = value; }
 
 	/*############################## Metodos ##############################*/
 	private void Update() {
 		GetInfoOnClick();
 	}
 	private void Awake() {
+		mapa.GeneradorMapa();
 		TiempoRestante = 60;
 		TurnoGeneral = 0;
 		TurnoPlayer = 3;
 		NextRoyale = 10;
+	}
+	/*copiar direccion de una a otra*/
+	public void SetearPosUnidad(){
+		if( unidadSeleccionada != null && tileSeleccionada != null ) {
+			Debug.Log( "entree" );
+			unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
+			unidadSeleccionada = null;
+			tileSeleccionada = null;
+		}
 	}
 	/*Le asinga su numero de player a cada jugador en el array*/
 	public void SetPlayerNumero() {
@@ -99,7 +112,7 @@ public class BoardController:MonoBehaviour {
 	public void ResetearColores() {
 		for( int x = 0; x < mapa.Tiles.GetLength( 0 ); x++ ) {
 			for( int y = 0; y < mapa.Tiles.GetLength( 1 ); y++ ) {
-				mapa.Tiles[x , y].SpriteRenderer.color = Color.white;
+				mapa.Tiles[x , y].GetComponent<Tile2>().SpriteRender2.color = Color.white;
 			}
 		}
 	}
@@ -143,7 +156,11 @@ public class BoardController:MonoBehaviour {
 				}
 				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
-			
+			if( hit2D.collider != null && hit2D.collider.tag == "Tiles" ) {
+				tileSeleccionada = hit2D.collider.GetComponent<Tile2>();
+				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
+				SetearPosUnidad();
+			}
 
 		}
 	}

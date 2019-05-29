@@ -18,6 +18,7 @@ public class TrashFile : MonoBehaviour
 	////Contador solo sirve actualmente para nombrar los tiles genardos con un numero unico
 	//int counter = 0;
 	////Awake ejecuta antes de iniciar el juego
+	////Awake ejecuta antes de iniciar el juego
 	//private void Awake() {
 	//	//Verifica si no hay un singleton en el juego, de no haber lo crea, y de no haber uno destruye el que se encuentra en la escena
 	//	if( boardController == null ) {
