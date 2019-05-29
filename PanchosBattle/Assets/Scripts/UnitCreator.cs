@@ -17,7 +17,7 @@ public class UnitCreator : MonoBehaviour
 
     void CrearUnit(){
         Units caballero = new Units(TipoUnidad.Guerrero,1);
-        caballero.PosX=0;
+        caballero.PosX=-8;
         caballero.PosY=0;
         caballero.MostrarRangoDeAtaque();
     }
