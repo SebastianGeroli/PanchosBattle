@@ -1,113 +1,156 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BoardController:MonoBehaviour {
-	/*SINGLETON solo puede haber uno en ejecucion durante todo el juego y controla actualmente la inicializacion del escenario y los movimientos de las unidades */
-	public static BoardController boardController;
-	public Movement movement;
-	//Cantidad de columnas(x) y cantidad de filas (y) que va a tener el array, y por lo tanto el mapa
-	private int col = 20;
-	private int row = 10;
-	//Array Bidimensional que contiene GameObjects
-	public GameObject[,] tiles;
-	//Posiciones X e Y  que se utilizan actualmente para mover la unidad a traves del array bidimensional 
-	private int posX;
-	private int posY;
-	//Contador solo sirve actualmente para nombrar los tiles genardos con un numero unico
-	int counter = 0;
-	//Awake ejecuta antes de iniciar el juego
-	private void Awake() {
-		//Verifica si no hay un singleton en el juego, de no haber lo crea, y de no haber uno destruye el que se encuentra en la escena
-		if( boardController == null ) {
-			DontDestroyOnLoad( gameObject );
-			boardController = this;
-		} else if( boardController != this ) {
-			Destroy( gameObject );
-		}
-		posX = 0;
-		posY = 0;
-		tiles = new GameObject[col , row];
-		movement.LimitUp = tiles.GetLength( 1 ) - 1;
-		movement.LimitDown = 0;
-		movement.LimitLeft = 0;
-		movement.LimitRight = tiles.GetLength( 0 ) - 1;
-	}
-	//Start se inicia en el primer frame del juego 
-	private void Start() {
-		InstantiateBoard();
-		InstantiateDamage();
-		InstantiateWater();
-		InstantiateGrass();
+	/*############################## Variables ##############################*/
+	public Player[] jugadores;
+	public Map mapa;
+	BattleRoyale battleRoyale = new BattleRoyale();
+	float tiempoRestante;
+	int turnoPlayer, turnoGeneral;
+	int nextRoyale;
+	private Units unidadDestino;
+	private Units unidadSeleccionada;
 
+	/*############################## Getters && Setters ##############################*/
+	public int TurnoPlayer { get => turnoPlayer; set => turnoPlayer = value; }
+	public int TurnoGeneral { get => turnoGeneral; set => turnoGeneral = value; }
+	public float TiempoRestante { get => tiempoRestante; set => tiempoRestante = value; }
+	public int NextRoyale { get => nextRoyale; set => nextRoyale = value; }
+	public Units UnidadSeleccionada { get => unidadSeleccionada; set => unidadSeleccionada = value; }
+	public Units UnidadDestino { get => unidadDestino; set => unidadDestino =  value ; }
 
-	}
-	//Se ejecuta constantemente en cada frame del juego 
+	/*############################## Metodos ##############################*/
 	private void Update() {
-		//Verifica las teclas presionadas y si el jugador se encuentra dentro de los limites de juego para mover, caso contrario no ejecuta nada.
-		if( Input.GetKeyDown( KeyCode.W ) && movement.transform.position.y < movement.LimitUp ) {
-			posY += 1;
-			movement.Move( tiles[posX , posY].GetComponent<Tiles>().GetPosX() , tiles[posX , posY].GetComponent<Tiles>().GetPosY() );
-		}
-		if( Input.GetKeyDown( KeyCode.S ) && movement.transform.position.y > movement.LimitDown ) {
-			posY -= 1;
-			movement.Move( tiles[posX , posY].GetComponent<Tiles>().GetPosX() , tiles[posX , posY].GetComponent<Tiles>().GetPosY() );
-		}
-		if( Input.GetKeyDown( KeyCode.A ) && movement.transform.position.x > movement.LimitLeft ) {
-			posX -= 1;
-			movement.Move( tiles[posX , posY].GetComponent<Tiles>().GetPosX() , tiles[posX , posY].GetComponent<Tiles>().GetPosY() );
-		}
-		if( Input.GetKeyDown( KeyCode.D ) && movement.transform.position.x < movement.LimitRight ) {
-			posX += 1;
-			movement.Move( tiles[posX , posY].GetComponent<Tiles>().GetPosX() , tiles[posX , posY].GetComponent<Tiles>().GetPosY() );
+		GetInfoOnClick();
+	}
+	private void Awake() {
+		TiempoRestante = 60;
+		TurnoGeneral = 0;
+		TurnoPlayer = 3;
+		NextRoyale = 10;
+	}
+	/*Le asinga su numero de player a cada jugador en el array*/
+	public void SetPlayerNumero() {
+		for(int x = 0; x < jugadores.Length;x++){
+			jugadores[x].NumeroPlayer = x;
 		}
 	}
-	//Inicia todo el escenario base
-	public void InstantiateBoard() {
-	/*Recorre el array bidimensional creando los GameObject
-		 * dandole las propiedades necesarias para su uso, posteriormente
-		 * En esta parte solo crea el mapa todo con las mismas texturas de Floor
-		 */
-	for( int x = 0; x < tiles.GetLength( 0 ); x++ ) {
-		for( int y = 0; y < tiles.GetLength( 1 ); y++ ) {
+	/*Al acabarse el tiempo este vuelve a el tiempo original
+	 * tambien cambia el turno de player para saber quien puede jugar
+	 * y agrega un turno al general para saber si empieza el battleroyale */
+	public void CambiarTurno() {
+		TiempoRestante -= Time.deltaTime;
+		if( TiempoRestante <= 0 ) {
+			if( TurnoPlayer == 1 ) {
+				TurnoPlayer = 2;
+				TiempoRestante = 30;
+				TurnoGeneral += 1;
+			} else {
+				turnoPlayer = 1;
+				tiempoRestante = 30;
+				TurnoGeneral += 1;
+			}
+		}
+	}
+	/*Recorre el listado de jugadores si alguno de ellos tiene sus unidades
+	 * totales en 0 o menos se da por terminada la partida y ese jugador pierde*/
+	public void GanoAlguien() {
+		for(int x = 0; x<jugadores.Length;x++ ) {
+			if(jugadores[x].UnidadesTotales <=0){
+				/*Cargar La UI diciendo que el jugador perdio y el otro gano*/
+			}
+		}
+	}
+	/*Mostraria u ocultaria el mapa, en principio no es necesario por ahora*/
+	public void MostrarMapa() {
+		/*Por ahora es inncesario*/
+	}
+	/*Muestra la UI de compra durante el turno 0 luego de este empiezan a jugar
+	 * y pone los datos necesarios para el proximo turno al vencerse el tiempo*/
+	public void MostrarUICompra() {
+		if( TurnoGeneral == 0 && TiempoRestante >= 0 ) {
+			/*Enable UI Compra*/
 
-			tiles[x , y] = new GameObject();
-			tiles[x , y].name = "Tile" + counter;
-			tiles[x , y].AddComponent<Tiles>();
-			tiles[x , y].GetComponent<Tiles>().SetPosX( x );
-			tiles[x , y].GetComponent<Tiles>().SetPosY( y );
-			tiles[x , y].GetComponent<Tiles>().SetTypeOfFloor( TypeOfFloor.Floor );
-			tiles[x , y].GetComponent<Tiles>().SpriteSelector();
-			//Debug.Log( tiles[x , y].name + "Posicion en array: " + x + " " + y );
-			counter++;
+		} else {
+			/*Desabilitar UI Compra*/
+			TurnoGeneral = 1;
+			TiempoRestante = 30;
+			turnoPlayer = 1;
 		}
 	}
+	/*Al cumplirse los requisitos de battleroyale, 2 turnos antes se avisa
+	 * que casillas se van a destruir y luego al llegar el turno de destruccion
+	 * se destruyen */
+	public void EsBattleRoyale() {
+		if( NextRoyale - TurnoGeneral <= 2 ) {
+			battleRoyale.MostrarIndicador( mapa.Tiles );
+		} else if( NextRoyale - TurnoGeneral <= 2 ) {
+			battleRoyale.DestruirTiles( mapa.Tiles );
+			NextRoyale += 4;
+		}
+
 	}
-	//Cambia las texturas de algunos Floor a Grass de forma random
-	public void InstantiateGrass() {
-		for( int i = 0; i < 10; i++ ) {
-			int randomX = Random.Range( 0 , 19 );
-			int randomY = Random.Range( 0 , 9 );
-			tiles[randomX , randomY].GetComponent<Tiles>().SetTypeOfFloor( TypeOfFloor.Grass );
-			tiles[randomX , randomY].GetComponent<Tiles>().SpriteSelector();
+	/* Esta tendria la logica de que va pasnado en cada click del juego*/
+	public void CheackearAccionPlayer() {
+
+	}
+	/*Al terminar el turno de cada juego los colores se resetean para 
+	 * que se vea todo de forma original*/
+	public void ResetearColores() {
+		for( int x = 0; x < mapa.Tiles.GetLength( 0 ); x++ ) {
+			for( int y = 0; y < mapa.Tiles.GetLength( 1 ); y++ ) {
+				mapa.Tiles[x , y].SpriteRenderer.color = Color.white;
+			}
 		}
 	}
-	//Cambia las texturas de algunos Floor a Water de forma random
-	public void InstantiateWater() {
-		for( int i = 0; i < 10; i++ ) {
-			int randomX = Random.Range( 4 , 15 );
-			int randomY = Random.Range( 0 , 9 );
-			tiles[randomX , randomY].GetComponent<Tiles>().SetTypeOfFloor( TypeOfFloor.Water );
-			tiles[randomX , randomY].GetComponent<Tiles>().SpriteSelector();
+	/*Al terminar el turno se resetean las acciones de todas las unidades 
+	 * para que se puedan mover nuevamente en el proximo turno */
+	public void ResetearAccionesUnidades() {
+		if( TurnoPlayer == 2 ) {
+			for( int x = 0; x < jugadores[0].Guerreros.Count; x++ ) {
+				jugadores[0].Guerreros[x].SeRealizoUnaAccion = false;
+			}
+			for( int x = 0; x < jugadores[0].Jinetes.Count; x++ ) {
+				jugadores[0].Guerreros[x].SeRealizoUnaAccion = false;
+			}
+			for( int x = 0; x < jugadores[0].Arqueros.Count; x++ ) {
+				jugadores[0].Guerreros[x].SeRealizoUnaAccion = false;
+			}
+		} else {
+			for( int x = 0; x < jugadores[1].Guerreros.Count; x++ ) {
+				jugadores[1].Guerreros[x].SeRealizoUnaAccion = false;
+			}
+			for( int x = 0; x < jugadores[1].Jinetes.Count; x++ ) {
+				jugadores[1].Guerreros[x].SeRealizoUnaAccion = false;
+			}
+			for( int x = 0; x < jugadores[1].Arqueros.Count; x++ ) {
+				jugadores[1].Guerreros[x].SeRealizoUnaAccion = false;
+			}
 		}
 	}
-	//Cambia las texturas de algunos Floor a Damage de forma random
-	public void InstantiateDamage() {
-		for( int i = 0; i < 10; i++ ) {
-			int randomX = Random.Range( 0 , 19 );
-			int randomY = Random.Range( 0 , 9 );
-			tiles[randomX , randomY].GetComponent<Tiles>().SetTypeOfFloor( TypeOfFloor.Damage );
-			tiles[randomX , randomY].GetComponent<Tiles>().SpriteSelector();
+	/*Con este metodo se obtiene la informacion del objeto sobre el cual 
+	 * se esta haciendo click*/
+	public void GetInfoOnClick() {
+		if( Input.GetMouseButtonDown( 0 ) ) {
+			RaycastHit2D hit2D = Physics2D.Raycast( Camera.main.ScreenToWorldPoint( Input.mousePosition ) , Vector2.zero );
+			if( hit2D.collider != null && hit2D.collider.tag == "Units") {
+				if( UnidadSeleccionada == null ) {
+					UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
+				} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador ) {
+					UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
+				} else {
+					UnidadDestino = hit2D.collider.GetComponent<Units>();
+				}
+				Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
+			}
+			
+
+		}
+	}
+	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
+	public void CheckearVidaUnidad() {
+		if( unidadDestino.Vida <= 0 ) {
+			unidadDestino.enabled = false;
 		}
 	}
 }
