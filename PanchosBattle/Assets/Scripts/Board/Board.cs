@@ -23,11 +23,18 @@ namespace Game.Board
         public Tile this [int x, int y] => this[new Vector2Int(x, y)];
         public Tile this[Vector2Int coordinates] => tiles[coordinates];
 
+        private BoundsInt? tileBounds = null;
+        public BoundsInt TileBounds => tileBounds ?? default;
+
 
         private Grid grid;
 
 
         public bool HasTile(Vector2Int coordinates) => tiles.ContainsKey(coordinates);
+
+
+        public Vector2Int GetTileCoordinatesFromWorldPoint(Vector2 position) => (Vector2Int)grid.WorldToCell(position);
+        public Tile GetTileFromWorldPoint(Vector2 position) => this[GetTileCoordinatesFromWorldPoint(position)];
 
 
         private void Awake()
@@ -54,9 +61,30 @@ namespace Game.Board
             newTile.Board = this;
             newTile.Coordinates = coordinates;
 
+            EncapsulateToBounds(coordinates);
+
             tiles.Add(coordinates, newTile);
             return newTile;
         }
+
+        /// <summary>
+        /// To extend the bounds to that point.
+        /// </summary>
+        /// <param name="point">The point to extend the bounds.</param>
+        private void EncapsulateToBounds(Vector2Int point)
+        {
+            if (tileBounds != null)
+            {
+                BoundsInt bounds = tileBounds.Value;
+                bounds.xMin = Mathf.Min(bounds.xMin, point.x);
+                bounds.xMax = Mathf.Max(bounds.xMax, point.x);
+                bounds.yMin = Mathf.Min(bounds.yMin, point.y);
+                bounds.yMax = Mathf.Max(bounds.yMax, point.y);
+                tileBounds = bounds;
+            }
+            else tileBounds = new BoundsInt((Vector3Int)point, Vector3Int.zero);
+        }
+
 
         public Tile CreateTile(Vector2Int coordinates, Tile.Info info)
         {
