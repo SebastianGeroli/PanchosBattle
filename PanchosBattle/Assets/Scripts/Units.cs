@@ -13,7 +13,7 @@ public class Units:MonoBehaviour {
 		posX, 
 		posY, 
 		perteneJugador;
-	bool SeRealizoUnaAccion;
+	bool seRealizoUnaAccion;
 	/*############################## Constructor ##############################*/
 	public Units( TipoUnidad tipoUnidad , int playerNumero ) {
 		perteneJugador=playerNumero;
@@ -54,6 +54,8 @@ public class Units:MonoBehaviour {
 	public int PosX { get => posX; set => posX = value; }
 	public int PosY { get => posY; set => posY = value; }
 	public int PerteneJugador { get => perteneJugador; set => perteneJugador =  value ; }
+	public bool SeRealizoUnaAccion { get => seRealizoUnaAccion; set => seRealizoUnaAccion =  value ; }
+
 	/*############################## Metodos ##############################*/
 	public void MostrarRangoDeMovimiento() {
 

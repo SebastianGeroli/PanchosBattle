@@ -8,15 +8,19 @@ public class Player:MonoBehaviour {
 	int unidadesTotales;
 	int dinero;
 	bool puedeJugar;
-	Units unidadSeleccioanda;
-	List<Units> Arqueros;
-	List<Units> Jinetes;
-	List<Units> Guerreros;
+	public Units unidadSeleccioanda;
+	List<Units> arqueros;
+	List<Units> jinetes;
+	List<Units> guerreros;
 	/*############################## Getters && Setters ##############################*/
 	public int NumeroPlayer { get => numeroPlayer; set => numeroPlayer = value; }
 	public bool PuedeJugar { get => puedeJugar; set => puedeJugar = value; }
 	public int Dinero { get => dinero; set => dinero = value; }
 	public int UnidadesTotales { get => unidadesTotales; set => unidadesTotales = value; }
+	public List<Units> Guerreros { get => Guerreros; set => Guerreros =  value ; }
+	public List<Units> Jinetes { get => Jinetes; set => Jinetes =  value ; }
+	public List<Units> Arqueros { get => Arqueros; set => Arqueros =  value ; }
+
 	/*############################## Metodos ##############################*/
 	public void ComprarGuerrero(){
 		Guerreros.Add( new Units(TipoUnidad.Guerrero, NumeroPlayer) );
