@@ -19,19 +19,13 @@ public class Board : MonoBehaviour
         tilesDictionary ?? (tilesDictionary = new ReadOnlyDictionary<Vector2Int, Tile>(tiles));
 
     public int UsedTilesCount => tiles.Count;
-    public Tile this[Vector2Int coordinates] => HasTile(coordinates) ? tiles[coordinates] : null;
+    public Tile this[Vector2Int coordinates] => tiles[coordinates];
 
 
     private Grid grid;
 
 
     public bool HasTile(Vector2Int coordinates) => tiles.ContainsKey(coordinates);
-
-
-    public Vector2Int GetTileCoordinatesFromWorldPoint(Vector2 position) => (Vector2Int)grid.WorldToCell(position);
-
-    public Tile GetTileFromWorldPoint(Vector2 position) => this[GetTileCoordinatesFromWorldPoint(position)];
-
 
 
     private void Awake()
