@@ -159,20 +159,20 @@ public class BoardController:MonoBehaviour {
 				jugadores[0].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 			for( int x = 0; x < jugadores[0].Jinetes.Count; x++ ) {
-				jugadores[0].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
+				jugadores[0].Jinetes[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 			for( int x = 0; x < jugadores[0].Arqueros.Count; x++ ) {
-				jugadores[0].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
+				jugadores[0].Arqueros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 		} else {
 			for( int x = 0; x < jugadores[1].Guerreros.Count; x++ ) {
 				jugadores[1].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 			for( int x = 0; x < jugadores[1].Jinetes.Count; x++ ) {
-				jugadores[1].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
+				jugadores[1].Jinetes[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 			for( int x = 0; x < jugadores[1].Arqueros.Count; x++ ) {
-				jugadores[1].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
+				jugadores[1].Arqueros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
 			}
 		}
 	}
