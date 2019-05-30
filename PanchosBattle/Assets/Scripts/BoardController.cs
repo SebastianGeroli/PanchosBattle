@@ -105,7 +105,7 @@ public class BoardController:MonoBehaviour {
 	/*Recorre el listado de jugadores si alguno de ellos tiene sus unidades
 	 * totales en 0 o menos se da por terminada la partida y ese jugador pierde*/
 	public void GanoAlguien() {
-		if( turnoGeneral > 2 ) {
+		if( turnoGeneral > 0) {
 			for( int x = 0; x < jugadores.Length; x++ ) {
 				if( jugadores[x].UnidadesTotales <= 0 ) {
 					textGanador.enabled = true;
