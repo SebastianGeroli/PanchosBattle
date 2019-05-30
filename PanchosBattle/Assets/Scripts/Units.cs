@@ -63,6 +63,9 @@ public class Units:MonoBehaviour {
 	public bool EstaEnTablero { get => estaEnTablero; set => estaEnTablero =  value ; }
 
 	/*############################## Metodos ##############################*/
+	private void Update() {
+		GetComponentInChildren<TextMesh>().text = vida.ToString();
+	}
 	public void MostrarRangoDeMovimiento() {
 
 	}
