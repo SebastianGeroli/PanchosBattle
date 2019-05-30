@@ -28,7 +28,13 @@ public class Player:MonoBehaviour {
 
 	/*############################## Metodos ##############################*/
 	public void ComprarGuerrero() {
-		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GameObject GO;
+		if( NumeroPlayer % 2 == 0 ) {
+		 GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+		} else {
+		 GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		}
+		
 		GO.transform.parent = transform;
 		Guerreros.Add( GO );
 		Guerreros[guerreros.Count - 1].transform.parent = transform;
@@ -36,7 +42,12 @@ public class Player:MonoBehaviour {
 		UnidadesTotales++;
 	}
 public void ComprarJinete() {
-		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GameObject GO;
+		if( NumeroPlayer % 2 == 0 ) {
+			GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+		} else {
+			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		}
 		GO.transform.parent = transform;
 		Jinetes.Add( GO );
 		Jinetes[jinetes.Count - 1].transform.parent = transform;
@@ -44,7 +55,12 @@ public void ComprarJinete() {
 		UnidadesTotales++;
 	}
 public void ComprarArquero() {
-		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GameObject GO;
+		if( NumeroPlayer % 2 == 0 ) {
+			GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+		} else {
+			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		}
 		GO.transform.parent = transform;
 		Arqueros.Add( GO );
 		Arqueros[arqueros.Count - 1].transform.parent = transform;

@@ -37,6 +37,7 @@ public class BoardController:MonoBehaviour {
 		MostrarUICompra();
 		CambiarTurno();
 		ResetearAccionesUnidades();
+		ShowRanges();
 	}
 	private void Awake() {
 		SetPlayers();
@@ -214,7 +215,7 @@ public class BoardController:MonoBehaviour {
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board1.TilesDictionary ) {
 				//Debug.Log( "Estoy en " + entry.Value.name );
 				entry.Value.tag = "Tiles";
-				if(entry.Value.SpawneableForPlayerNumber == 1){
+				if( entry.Value.SpawneableForPlayerNumber == 1 ) {
 					entry.Value.HighlightColor = Color.magenta;
 				}
 				if( entry.Value.SpawneableForPlayerNumber == 2 ) {
@@ -232,38 +233,50 @@ public class BoardController:MonoBehaviour {
 					if( unidadSeleccionada.tipounidad == TipoUnidad.Guerrero && unidadDestino.tipounidad == TipoUnidad.Jinete ) {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
+						CheckearVidaUnidad();
+						unidadSeleccionada = null;
+						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
 					} else if( unidadSeleccionada.tipounidad == TipoUnidad.Arquero && unidadDestino.tipounidad == TipoUnidad.Guerrero ) {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
+						CheckearVidaUnidad();
+						unidadSeleccionada = null;
+						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
 					} else if( unidadSeleccionada.tipounidad == TipoUnidad.Jinete && unidadDestino.tipounidad == TipoUnidad.Arquero ) {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
+						CheckearVidaUnidad();
+						unidadSeleccionada = null;
+						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3" );
 					} else {
 						unidadDestino.Vida -= unidadSeleccionada.Damage;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
+						CheckearVidaUnidad();
+						unidadSeleccionada = null;
+						unidadDestino = null;
 						///	Debug.Log( "Ataque" );
 					}
 				}
 			}
-			CheckearVidaUnidad();
+
 		}
 
 	}
 	/*Mover La unidad*/
 	public void MoverUnidad() {
 		bool isAvailable = true;
-		if( turnoGeneral ==0 ) {
+		if( turnoGeneral == 0 ) {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
 				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
-					for(int x = 0;x<jugadores[turnoPlayer-1].Guerreros.Count;x++ ){
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
 						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
 							tileSeleccionada.HighlightColor = Color.clear;
 							tileSeleccionada = null;
 							isAvailable = false;
-						} 
+						}
 					}
 					for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
 						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
@@ -279,14 +292,14 @@ public class BoardController:MonoBehaviour {
 							isAvailable = false;
 						}
 					}
-					if(isAvailable){
+					if( isAvailable ) {
 						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 						tileSeleccionada.HighlightColor = Color.clear;
 						unidadSeleccionada.EstaEnTablero = true;
 						unidadSeleccionada = null;
 						tileSeleccionada = null;
 					}
-					
+
 				}
 			}
 
@@ -346,7 +359,7 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Selecciona las tiles*/
 	public void SeleccionarTile( RaycastHit2D hit2D ) {
-		
+
 		if( tileSeleccionada != hit2D.collider.GetComponent<Tile>() && tileSeleccionada != null ) {
 			tileSeleccionada.HighlightColor = Color.clear;
 			tileSeleccionada = hit2D.collider.GetComponent<Tile>();
@@ -357,7 +370,7 @@ public class BoardController:MonoBehaviour {
 		}
 		//Debug.Log( "Se ha seleccionado una tile" );
 	}
-	/*Cheackear distancia*/
+	/*Cheackear distancia en base a los rangos de movieminto y ataque si se encuentra dentro del rango devuelve true*/
 	public bool CheckDistance( float pos1 , float pos2 , int distancia ) {
 		if( Mathf.Abs( pos1 - pos2 ) < distancia ) {
 			return true;
@@ -368,7 +381,32 @@ public class BoardController:MonoBehaviour {
 	/*SetColors*/
 	public void SetColorsFinalTurno() {
 		foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-			entry.Value.HighlightColor = Color.clear;	
+			entry.Value.HighlightColor = Color.clear;
 		}
+	}
+	/*ShowRange*/
+	public void ShowRanges() {
+		if( unidadSeleccionada != null ) {
+			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
+						entry.Value.HighlightColor = Color.green;
+					}
+				}
+			}
+			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque ) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque ) ) {
+						entry.Value.HighlightColor = Color.red;
+					}
+				}
+			}
+		} else{
+			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
+				entry.Value.HighlightColor = Color.clear;
+			}
+		}
+		
+
 	}
 }
