@@ -36,6 +36,7 @@ public class BoardController:MonoBehaviour {
 		TimeControl();
 		MostrarUICompra();
 		CambiarTurno();
+		ResetearAccionesUnidades();
 	}
 	private void Awake() {
 		SetPlayers();
@@ -56,7 +57,7 @@ public class BoardController:MonoBehaviour {
 	/*Le asinga su numero de player a cada jugador en el array*/
 	public void SetPlayers() {
 		for( int x = 0; x < jugadores.Length; x++ ) {
-			jugadores[x].NumeroPlayer = x+1;
+			jugadores[x].NumeroPlayer = x + 1;
 			jugadores[x].Dinero = 2000;
 		}
 	}
@@ -78,6 +79,9 @@ public class BoardController:MonoBehaviour {
 				TiempoRestante = 30;
 				TurnoGeneral += 1;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
+				unidadSeleccionada = null;
+				unidadDestino = null;
+				tileSeleccionada = null;
 			} else {
 				textTurnoPlayer.enabled = true;
 				textTurnoPlayer2.enabled = false;
@@ -85,6 +89,9 @@ public class BoardController:MonoBehaviour {
 				tiempoRestante = 30;
 				TurnoGeneral += 1;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
+				unidadSeleccionada = null;
+				unidadDestino = null;
+				tileSeleccionada = null;
 			}
 		}
 	}
@@ -187,7 +194,7 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
 	public void CheckearVidaUnidad() {
-		if( unidadDestino.Vida <= 90 ) {
+		if( unidadDestino.Vida <= 0 ) {
 			unidadDestino.gameObject.SetActive( false );
 			if( jugadores[0].NumeroPlayer == unidadDestino.PerteneJugador ) {
 				jugadores[0].UnidadesTotales -= 1;
@@ -237,19 +244,32 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Mover La unidad*/
 	public void MoverUnidad() {
-		if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
-			if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
-				if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
+		if( turnoGeneral < 3 ) {
+			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
+				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
 					unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
-					unidadSeleccionada.SeRealizoUnaAccion = true;
-					//	Debug.Log( "Entre" );
+					unidadSeleccionada.EstaEnTablero = true;
+				}
+			}
+
+		} else {
+			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
+				if( unidadSeleccionada.EstaEnTablero ) {
+					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
+						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
+							unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
+							unidadSeleccionada.SeRealizoUnaAccion = true;
+							//	Debug.Log( "Entre" );
+						}
+					}
 				}
 			}
 		}
+
 	}
 	/*Seleccionar Unidad*/
 	public void SeleccionarUnidad( RaycastHit2D hit2D ) {
-		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador  == jugadores[turnoPlayer-1].NumeroPlayer) {
+		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador == jugadores[turnoPlayer - 1].NumeroPlayer ) {
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
 		} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador ) {
