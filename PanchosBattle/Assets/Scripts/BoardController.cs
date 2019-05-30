@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	public Canvas canvasPlayer1, canvasPlayer2;
-	public Text textTiempo, textTurnoPlayer, textTurnoGeneral, textTurnoPlayer2;
+	public Text textTiempo, textTurnoPlayer, textTurnoGeneral, textTurnoPlayer2, textGanador;
 	public Board board;
 	public Player[] jugadores;
 	BattleRoyale battleRoyale = new BattleRoyale();
@@ -37,6 +37,7 @@ public class BoardController:MonoBehaviour {
 		MostrarUICompra();
 		CambiarTurno();
 		ResetearAccionesUnidades();
+		GanoAlguien();
 	}
 	private void Awake() {
 		SetPlayers();
@@ -44,6 +45,7 @@ public class BoardController:MonoBehaviour {
 		TurnoGeneral = 0;
 		TurnoPlayer = 1;
 		NextRoyale = 10;
+		textGanador.enabled = false;
 	}
 	/*copiar direccion de una a otra*/
 	public void SetearPosUnidad() {
@@ -106,7 +108,12 @@ public class BoardController:MonoBehaviour {
 		if( turnoGeneral > 2 ) {
 			for( int x = 0; x < jugadores.Length; x++ ) {
 				if( jugadores[x].UnidadesTotales <= 0 ) {
-					/*Cargar La UI diciendo que el jugador perdio y el otro gano*/
+					textGanador.enabled = true;
+					if( x == 0 ) {
+						textGanador.text = "Ganador: \n Jugador 2";
+					} else {
+						textGanador.text = "Ganador: \n Jugador 1";
+					}
 				}
 			}
 		}
@@ -430,7 +437,7 @@ public class BoardController:MonoBehaviour {
 		}
 	}
 	/*Pasar Turno*/
-	public void PasarTurno(){
+	public void PasarTurno() {
 		if( tiempoRestante > 30 ) {
 			tiempoRestante = 30;
 		} else {
