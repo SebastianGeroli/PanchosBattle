@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b946b8cabd1aa43b4ff018b2d29102, type: 3}
-  m_Name: Walkable1
+  m_Script: {fileID: 11500000, guid: b4c47afcb1f60b74eb457f083bc5b8ba, type: 3}
+  m_Name: Walkable
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 21abca660780d4f448c29620aec24f78, type: 3}
   color: {r: 0.61960787, g: 0.8000001, b: 0.16078432, a: 1}
