@@ -103,15 +103,13 @@ public class BoardController:MonoBehaviour {
 	/*Recorre el listado de jugadores si alguno de ellos tiene sus unidades
 	 * totales en 0 o menos se da por terminada la partida y ese jugador pierde*/
 	public void GanoAlguien() {
-		for( int x = 0; x < jugadores.Length; x++ ) {
-			if( jugadores[x].UnidadesTotales <= 0 ) {
-				/*Cargar La UI diciendo que el jugador perdio y el otro gano*/
+		if( turnoGeneral > 2 ) {
+			for( int x = 0; x < jugadores.Length; x++ ) {
+				if( jugadores[x].UnidadesTotales <= 0 ) {
+					/*Cargar La UI diciendo que el jugador perdio y el otro gano*/
+				}
 			}
 		}
-	}
-	/*Mostraria u ocultaria el mapa, en principio no es necesario por ahora*/
-	public void MostrarMapa() {
-		/*Por ahora es inncesario*/
 	}
 	/*Muestra la UI de compra durante el turno 0 luego de este empiezan a jugar
 	 * y pone los datos necesarios para el proximo turno al vencerse el tiempo*/
@@ -392,8 +390,8 @@ public class BoardController:MonoBehaviour {
 	public void ShowRanges() {
 		ClearHighligths();
 		SetColorSpawns();
-		if( unidadSeleccionada != null  && unidadSeleccionada.EstaEnTablero) {
-			
+		if( unidadSeleccionada != null && unidadSeleccionada.EstaEnTablero ) {
+
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
 				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
 					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
@@ -429,6 +427,14 @@ public class BoardController:MonoBehaviour {
 					entry.Value.HighlightColor = Color.cyan;
 				}
 			}
+		}
+	}
+	/*Pasar Turno*/
+	public void PasarTurno(){
+		if( tiempoRestante > 30 ) {
+			tiempoRestante = 30;
+		} else {
+			tiempoRestante = 1;
 		}
 	}
 }
