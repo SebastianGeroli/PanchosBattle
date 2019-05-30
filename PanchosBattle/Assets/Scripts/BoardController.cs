@@ -32,7 +32,7 @@ public class BoardController:MonoBehaviour {
 	/*############################## Metodos ##############################*/
 	private void Update() {
 		CheckActions();
-		ArrayTiles( board );
+		SetTilesTagColor( board );
 		TimeControl();
 		MostrarUICompra();
 		CambiarTurno();
@@ -42,7 +42,7 @@ public class BoardController:MonoBehaviour {
 		SetPlayers();
 		TiempoRestante = 60;
 		TurnoGeneral = 0;
-		TurnoPlayer = 3;
+		TurnoPlayer = 1;
 		NextRoyale = 10;
 	}
 	/*copiar direccion de una a otra*/
@@ -82,6 +82,7 @@ public class BoardController:MonoBehaviour {
 				unidadSeleccionada = null;
 				unidadDestino = null;
 				tileSeleccionada = null;
+				SetColorsFinalTurno();
 			} else {
 				textTurnoPlayer.enabled = true;
 				textTurnoPlayer2.enabled = false;
@@ -92,6 +93,7 @@ public class BoardController:MonoBehaviour {
 				unidadSeleccionada = null;
 				unidadDestino = null;
 				tileSeleccionada = null;
+				SetColorsFinalTurno();
 			}
 		}
 	}
@@ -113,12 +115,14 @@ public class BoardController:MonoBehaviour {
 	public void MostrarUICompra() {
 		if( TurnoGeneral == 0 && TiempoRestante >= 0 ) {
 			if( TiempoRestante > 30 ) {
+				turnoPlayer = 1;
 				canvasPlayer1.enabled = true;
 				canvasPlayer2.enabled = false;
 				textTurnoPlayer.enabled = true;
 				textTurnoPlayer2.enabled = false;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 			} else {
+				turnoPlayer = 2;
 				canvasPlayer1.enabled = false;
 				canvasPlayer2.enabled = true;
 				textTurnoPlayer.enabled = false;
@@ -205,11 +209,17 @@ public class BoardController:MonoBehaviour {
 		}
 	}
 	/*Convert Dictionary from board to Array */
-	public void ArrayTiles( Board board1 ) {
+	public void SetTilesTagColor( Board board1 ) {
 		if( !alreadyDone ) {
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board1.TilesDictionary ) {
 				//Debug.Log( "Estoy en " + entry.Value.name );
 				entry.Value.tag = "Tiles";
+				if(entry.Value.SpawneableForPlayerNumber == 1){
+					entry.Value.HighlightColor = Color.magenta;
+				}
+				if( entry.Value.SpawneableForPlayerNumber == 2 ) {
+					entry.Value.HighlightColor = Color.cyan;
+				}
 			}
 		}
 		alreadyDone = true;
@@ -244,11 +254,39 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Mover La unidad*/
 	public void MoverUnidad() {
-		if( turnoGeneral < 3 ) {
+		bool isAvailable = true;
+		if( turnoGeneral ==0 ) {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
 				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
-					unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
-					unidadSeleccionada.EstaEnTablero = true;
+					for(int x = 0;x<jugadores[turnoPlayer-1].Guerreros.Count;x++ ){
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
+							tileSeleccionada.HighlightColor = Color.clear;
+							tileSeleccionada = null;
+							isAvailable = false;
+						} 
+					}
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
+							tileSeleccionada.HighlightColor = Color.clear;
+							tileSeleccionada = null;
+							isAvailable = false;
+						}
+					}
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
+							tileSeleccionada.HighlightColor = Color.clear;
+							tileSeleccionada = null;
+							isAvailable = false;
+						}
+					}
+					if(isAvailable){
+						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
+						tileSeleccionada.HighlightColor = Color.clear;
+						unidadSeleccionada.EstaEnTablero = true;
+						unidadSeleccionada = null;
+						tileSeleccionada = null;
+					}
+					
 				}
 			}
 
@@ -257,9 +295,35 @@ public class BoardController:MonoBehaviour {
 				if( unidadSeleccionada.EstaEnTablero ) {
 					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
 						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
-							unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
-							unidadSeleccionada.SeRealizoUnaAccion = true;
-							//	Debug.Log( "Entre" );
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
+									tileSeleccionada.HighlightColor = Color.clear;
+									tileSeleccionada = null;
+									isAvailable = false;
+								}
+							}
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
+									tileSeleccionada.HighlightColor = Color.clear;
+									tileSeleccionada = null;
+									isAvailable = false;
+								}
+							}
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
+									tileSeleccionada.HighlightColor = Color.clear;
+									tileSeleccionada = null;
+									isAvailable = false;
+								}
+							}
+							if( isAvailable ) {
+								unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
+								tileSeleccionada.HighlightColor = Color.clear;
+								unidadSeleccionada.SeRealizoUnaAccion = true;
+								unidadSeleccionada.EstaEnTablero = true;
+								unidadSeleccionada = null;
+								tileSeleccionada = null;
+							}
 						}
 					}
 				}
@@ -282,7 +346,15 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Selecciona las tiles*/
 	public void SeleccionarTile( RaycastHit2D hit2D ) {
-		tileSeleccionada = hit2D.collider.GetComponent<Tile>();
+		
+		if( tileSeleccionada != hit2D.collider.GetComponent<Tile>() && tileSeleccionada != null ) {
+			tileSeleccionada.HighlightColor = Color.clear;
+			tileSeleccionada = hit2D.collider.GetComponent<Tile>();
+			tileSeleccionada.HighlightColor = Color.black;
+		} else {
+			tileSeleccionada = hit2D.collider.GetComponent<Tile>();
+			tileSeleccionada.HighlightColor = Color.black;
+		}
 		//Debug.Log( "Se ha seleccionado una tile" );
 	}
 	/*Cheackear distancia*/
@@ -293,6 +365,10 @@ public class BoardController:MonoBehaviour {
 			return false;
 		}
 	}
-
-
+	/*SetColors*/
+	public void SetColorsFinalTurno() {
+		foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
+			entry.Value.HighlightColor = Color.clear;	
+		}
+	}
 }

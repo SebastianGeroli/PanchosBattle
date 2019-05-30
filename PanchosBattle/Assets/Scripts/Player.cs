@@ -28,31 +28,28 @@ public class Player:MonoBehaviour {
 
 	/*############################## Metodos ##############################*/
 	public void ComprarGuerrero() {
-		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
-
+		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GO.transform.parent = transform;
 		Guerreros.Add( GO );
-		for( int x = 0; x < guerreros.Count; x++ ) {
-			Guerreros[x].AddComponent<Units>();
-			Guerreros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
-		}
+		Guerreros[guerreros.Count - 1].transform.parent = transform;
+		Guerreros[guerreros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
 		UnidadesTotales++;
 	}
-	public void ComprarJinete() {
-		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
+public void ComprarJinete() {
+		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GO.transform.parent = transform;
 		Jinetes.Add( GO );
-		for( int x = 0; x < guerreros.Count; x++ ) {
-			Jinetes[x].AddComponent<Units>();
-			Jinetes[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
-		}
+		Jinetes[jinetes.Count - 1].transform.parent = transform;
+		Jinetes[jinetes.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
 		UnidadesTotales++;
 	}
-	public void ComprarArquero() {
-		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
+public void ComprarArquero() {
+		GameObject GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+		GO.transform.parent = transform;
 		Arqueros.Add( GO );
-		for( int x = 0; x < guerreros.Count; x++ ) {
-			Arqueros[x].AddComponent<Units>();
-			Arqueros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
-		}
+		Arqueros[arqueros.Count - 1].transform.parent = transform;
+		Arqueros[arqueros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
 		UnidadesTotales++;
-	}
+		UnidadesTotales++;
+}
 }

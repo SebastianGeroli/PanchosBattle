@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2155429805494196233}
   m_Layer: 0
   m_Name: Unidad
-  m_TagString: Untagged
+  m_TagString: Units
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92de6660e1ca584419343652ff080772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipounidad: 0
+  tipounidad: 1
 --- !u!60 &2155429805494196233
 PolygonCollider2D:
   m_ObjectHideFlags: 0
