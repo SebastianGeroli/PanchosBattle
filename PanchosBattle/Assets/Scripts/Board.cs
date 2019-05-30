@@ -12,7 +12,7 @@ public class Board : MonoBehaviour
     private Transform tilesContainer = default;
 
 
-    private Dictionary<Vector2Int, Tile> tiles = new Dictionary<Vector2Int, Tile>();
+    public Dictionary<Vector2Int, Tile> tiles = new Dictionary<Vector2Int, Tile>();
 
     private ReadOnlyDictionary<Vector2Int, Tile> tilesDictionary = null;
     public ReadOnlyDictionary<Vector2Int, Tile> TilesDictionary =>

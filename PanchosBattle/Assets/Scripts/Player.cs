@@ -4,44 +4,55 @@ using UnityEngine;
 
 public class Player:MonoBehaviour {
 	/*############################## Variables ##############################*/
+	[SerializeField]
 	int numeroPlayer;
+	[SerializeField]
 	int unidadesTotales;
+	[SerializeField]
 	int dinero;
 	bool puedeJugar;
-	public Units unidadSeleccioanda;
-	List<Units> arqueros;
-	List<Units> jinetes;
-	List<Units> guerreros;
+	[SerializeField]
+	List<GameObject> arqueros;
+	[SerializeField]
+	List<GameObject> jinetes;
+	[SerializeField]
+	List<GameObject> guerreros;
 	/*############################## Getters && Setters ##############################*/
 	public int NumeroPlayer { get => numeroPlayer; set => numeroPlayer = value; }
 	public bool PuedeJugar { get => puedeJugar; set => puedeJugar = value; }
 	public int Dinero { get => dinero; set => dinero = value; }
 	public int UnidadesTotales { get => unidadesTotales; set => unidadesTotales = value; }
-	public List<Units> Guerreros { get => Guerreros; set => Guerreros =  value ; }
-	public List<Units> Jinetes { get => Jinetes; set => Jinetes =  value ; }
-	public List<Units> Arqueros { get => Arqueros; set => Arqueros =  value ; }
+	public List<GameObject> Guerreros { get => guerreros; set => guerreros = value; }
+	public List<GameObject> Jinetes { get => jinetes; set => jinetes = value; }
+	public List<GameObject> Arqueros { get => arqueros; set => arqueros = value; }
 
 	/*############################## Metodos ##############################*/
-	public void ComprarGuerrero(){
-		Guerreros.Add( new Units(TipoUnidad.Guerrero, NumeroPlayer) );
+	public void ComprarGuerrero() {
+		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
+
+		Guerreros.Add( GO );
+		for( int x = 0; x < guerreros.Count; x++ ) {
+			Guerreros[x].AddComponent<Units>();
+			Guerreros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
+		}
+		UnidadesTotales++;
 	}
-	public void ComprarJinete(){
-		Jinetes.Add( new Units(TipoUnidad.Jinete,NumeroPlayer) );
+	public void ComprarJinete() {
+		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
+		Jinetes.Add( GO );
+		for( int x = 0; x < guerreros.Count; x++ ) {
+			Jinetes[x].AddComponent<Units>();
+			Jinetes[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
+		}
+		UnidadesTotales++;
 	}
 	public void ComprarArquero() {
-		Arqueros.Add( new Units(TipoUnidad.Arquero,numeroPlayer) );
-	}
-	public Units SeleccionarUnidad() {
-		
-		return unidadSeleccioanda;
-	}
-	public void MoverUnidad() {
-
-	}
-	public void Atacar() {
-
-	}
-	public void DesplegarUnidadSobreMapa() {
-
+		GameObject GO = Resources.Load( "Unidad" ) as GameObject;
+		Arqueros.Add( GO );
+		for( int x = 0; x < guerreros.Count; x++ ) {
+			Arqueros[x].AddComponent<Units>();
+			Arqueros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
+		}
+		UnidadesTotales++;
 	}
 }
