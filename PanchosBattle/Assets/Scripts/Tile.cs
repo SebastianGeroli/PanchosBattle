@@ -25,7 +25,13 @@ public class Tile:MonoBehaviour {
 	public int SpawneableForPlayerNumber { get => spawneableForPlayerNumber; set => spawneableForPlayerNumber = value; }
 	public bool CanSpawn => spawneableForPlayerNumber > 0;
 
-	[SerializeField]
+    [Space]
+
+    [SerializeField]
+    private SpriteRenderer baseSprite = default;
+    public Sprite Sprite { get => baseSprite.sprite; set => baseSprite.sprite = value; }
+
+    [SerializeField]
 	private SpriteRenderer highlightSprite = default;
 	public Color HighlightColor { get => highlightSprite.color; set => highlightSprite.color = value; }
 	public SpriteRenderer HighlightSprite { get => highlightSprite; set => highlightSprite = value; }
