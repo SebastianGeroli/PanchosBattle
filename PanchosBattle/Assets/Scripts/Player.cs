@@ -62,6 +62,5 @@ public class Player:MonoBehaviour {
 		Arqueros[arqueros.Count - 1].transform.SetParent( transform );
 		Arqueros[arqueros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
 		UnidadesTotales++;
-		UnidadesTotales++;
 	}
 }

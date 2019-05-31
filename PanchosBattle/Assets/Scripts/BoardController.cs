@@ -328,21 +328,18 @@ public class BoardController:MonoBehaviour {
 						for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
 								ShowRanges();
-								tileSeleccionada = null;
 								isAvailable = false;
 							}
 						}
 						for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
 								ShowRanges();
-								tileSeleccionada = null;
 								isAvailable = false;
 							}
 						}
 						for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
 								ShowRanges();
-								tileSeleccionada = null;
 								isAvailable = false;
 							}
 						}
@@ -353,6 +350,8 @@ public class BoardController:MonoBehaviour {
 						ShowRanges();
 						unidadSeleccionada.EstaEnTablero = true;
 						unidadSeleccionada = null;
+						tileSeleccionada = null;
+					} else {
 						tileSeleccionada = null;
 					}
 
@@ -368,21 +367,18 @@ public class BoardController:MonoBehaviour {
 								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
 										ShowRanges();
-										tileSeleccionada = null;
 										isAvailable = false;
 									}
 								}
 								for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
 										ShowRanges();
-										tileSeleccionada = null;
 										isAvailable = false;
 									}
 								}
 								for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
 										ShowRanges();
-										tileSeleccionada = null;
 										isAvailable = false;
 									}
 								}
@@ -394,6 +390,8 @@ public class BoardController:MonoBehaviour {
 								unidadSeleccionada.SeRealizoUnaAccion = true;
 								unidadSeleccionada.EstaEnTablero = true;
 								unidadSeleccionada = null;
+								tileSeleccionada = null;
+							} else {
 								tileSeleccionada = null;
 							}
 						}
