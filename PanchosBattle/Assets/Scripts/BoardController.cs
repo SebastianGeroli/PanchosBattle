@@ -183,6 +183,10 @@ public class BoardController:MonoBehaviour {
 	/*Con este metodo se obtiene la informacion del objeto sobre el cual 
 	 * se esta haciendo click*/
 	public void CheckActions() {
+		Ataque();
+		MoverUnidad();
+		ClearHighligths();
+		ShowRanges();
 		if( Input.GetMouseButtonDown( 0 ) ) {
 			RaycastHit2D hit2D = Physics2D.Raycast( Camera.main.ScreenToWorldPoint( Input.mousePosition ) , Vector2.zero );
 			if( hit2D.collider != null && hit2D.collider.tag == "Units" ) {
@@ -191,12 +195,12 @@ public class BoardController:MonoBehaviour {
 				MoverUnidad();
 				ClearHighligths();
 				ShowRanges();
+
 				//Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
 			if( hit2D.collider != null && hit2D.collider.tag == "Tiles" ) {
 				SeleccionarTile( hit2D );
 				MoverUnidad();
-
 				//Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
 
@@ -278,30 +282,33 @@ public class BoardController:MonoBehaviour {
 		if( turnoGeneral == 0 ) {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
 				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
-					for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
-						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
-							ClearHighligths();
-							SetColorSpawns();
-							tileSeleccionada = null;
-							isAvailable = false;
+					for(int i = 0; i<jugadores.Length;i++ ){
+						for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
+							if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
+								ClearHighligths();
+								SetColorSpawns();
+								tileSeleccionada = null;
+								isAvailable = false;
+							}
+						}
+						for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
+							if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
+								ClearHighligths();
+								SetColorSpawns();
+								tileSeleccionada = null;
+								isAvailable = false;
+							}
+						}
+						for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
+							if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
+								ClearHighligths();
+								SetColorSpawns();
+								tileSeleccionada = null;
+								isAvailable = false;
+							}
 						}
 					}
-					for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
-						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
-							ClearHighligths();
-							SetColorSpawns();
-							tileSeleccionada = null;
-							isAvailable = false;
-						}
-					}
-					for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
-						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
-							ClearHighligths();
-							SetColorSpawns();
-							tileSeleccionada = null;
-							isAvailable = false;
-						}
-					}
+				
 					if( isAvailable ) {
 						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 						ClearHighligths();
@@ -319,30 +326,33 @@ public class BoardController:MonoBehaviour {
 				if( unidadSeleccionada.EstaEnTablero ) {
 					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
 						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
-							for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
-								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
-									ClearHighligths();
-									SetColorSpawns();
-									tileSeleccionada = null;
-									isAvailable = false;
+							for( int i = 0; i < jugadores.Length; i++ ) {
+								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
+									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
+										ClearHighligths();
+										SetColorSpawns();
+										tileSeleccionada = null;
+										isAvailable = false;
+									}
+								}
+								for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
+									if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
+										ClearHighligths();
+										SetColorSpawns();
+										tileSeleccionada = null;
+										isAvailable = false;
+									}
+								}
+								for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
+									if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
+										ClearHighligths();
+										SetColorSpawns();
+										tileSeleccionada = null;
+										isAvailable = false;
+									}
 								}
 							}
-							for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
-								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
-									ClearHighligths();
-									SetColorSpawns();
-									tileSeleccionada = null;
-									isAvailable = false;
-								}
-							}
-							for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
-								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
-									ClearHighligths();
-									SetColorSpawns();
-									tileSeleccionada = null;
-									isAvailable = false;
-								}
-							}
+							
 							if( isAvailable ) {
 								unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 								ClearHighligths();
@@ -361,13 +371,14 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Seleccionar Unidad*/
 	public void SeleccionarUnidad( RaycastHit2D hit2D ) {
-		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador == jugadores[turnoPlayer - 1].NumeroPlayer ) {
+		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador == jugadores[turnoPlayer - 1].NumeroPlayer && !hit2D.collider.GetComponent<Units>().SeRealizoUnaAccion) {
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
-		} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador ) {
+		} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador && !hit2D.collider.GetComponent<Units>().SeRealizoUnaAccion ) {
+			tileSeleccionada = null;
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
-		} else {
+		} else if(UnidadSeleccionada!= null) {
 			UnidadDestino = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad'enemiga" );
 		}
