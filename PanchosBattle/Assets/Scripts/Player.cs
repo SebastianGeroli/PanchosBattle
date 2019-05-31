@@ -37,7 +37,7 @@ public class Player:MonoBehaviour {
 		
 		GO.transform.parent = transform;
 		Guerreros.Add( GO );
-		Guerreros[guerreros.Count - 1].transform.parent = transform;
+		Guerreros[guerreros.Count - 1].transform.SetParent(transform);
 		Guerreros[guerreros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
 		UnidadesTotales++;
 	}
@@ -50,7 +50,7 @@ public void ComprarJinete() {
 		}
 		GO.transform.parent = transform;
 		Jinetes.Add( GO );
-		Jinetes[jinetes.Count - 1].transform.parent = transform;
+		Jinetes[jinetes.Count - 1].transform.SetParent(transform);
 		Jinetes[jinetes.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
 		UnidadesTotales++;
 	}
@@ -63,7 +63,7 @@ public void ComprarArquero() {
 		}
 		GO.transform.parent = transform;
 		Arqueros.Add( GO );
-		Arqueros[arqueros.Count - 1].transform.parent = transform;
+		Arqueros[arqueros.Count - 1].transform.SetParent(transform);
 		Arqueros[arqueros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
 		UnidadesTotales++;
 		UnidadesTotales++;

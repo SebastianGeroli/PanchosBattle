@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
+	public float multiplierX, multiplierY;
 	public Canvas canvasPlayer1, canvasPlayer2;
 	public Text textTiempo, textTurnoPlayer, textTurnoGeneral, textTurnoPlayer2, textGanador;
 	public Button playAgain;
@@ -419,7 +420,7 @@ public class BoardController:MonoBehaviour {
 		//Debug.Log( "Se ha seleccionado una tile" );
 	}
 	/*Cheackear distancia en base a los rangos de movieminto y ataque si se encuentra dentro del rango devuelve true*/
-	public bool CheckDistance( float pos1 , float pos2 , int distancia ) {
+	public bool CheckDistance( float pos1 , float pos2 , float distancia ) {
 		if( Mathf.Abs( pos1 - pos2 ) < distancia ) {
 			return true;
 		} else {
@@ -433,15 +434,15 @@ public class BoardController:MonoBehaviour {
 		if( unidadSeleccionada != null && unidadSeleccionada.EstaEnTablero ) {
 
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
-					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento* multiplierX) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento *multiplierY ) ) {
 						entry.Value.HighlightColor = Color.green;
 					}
 				}
 			}
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque ) ) {
-					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque ) ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque *multiplierX) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque*multiplierY ) ) {
 						entry.Value.HighlightColor = Color.red;
 					}
 				}
