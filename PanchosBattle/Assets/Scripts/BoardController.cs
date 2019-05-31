@@ -395,7 +395,7 @@ public class BoardController:MonoBehaviour {
 			tileSeleccionada = null;
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
-		} else if( UnidadSeleccionada != null ) {
+		} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador != UnidadSeleccionada.PerteneJugador ) {
 			UnidadDestino = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad'enemiga" );
 		}
