@@ -41,7 +41,7 @@ public class BoardController:MonoBehaviour {
 		SetPlayers();
 		TiempoRestante = 60;
 		TurnoGeneral = 0;
-		TurnoPlayer = 3;
+		TurnoPlayer = 1;
 		NextRoyale = 10;
 	}
 	/*copiar direccion de una a otra*/
@@ -77,6 +77,7 @@ public class BoardController:MonoBehaviour {
 				TurnoPlayer = 2;
 				TiempoRestante = 30;
 				TurnoGeneral += 1;
+				Debug.Log("Why isnt it changing?: "+turnoPlayer);
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 			} else {
 				textTurnoPlayer.enabled = true;
@@ -116,6 +117,7 @@ public class BoardController:MonoBehaviour {
 				canvasPlayer2.enabled = true;
 				textTurnoPlayer.enabled = false;
 				textTurnoPlayer2.enabled = true;
+				turnoPlayer=2;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 			}
 		} else if( turnoGeneral < 1 ) {
@@ -182,7 +184,7 @@ public class BoardController:MonoBehaviour {
 				MoverUnidad();
 				//Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
-			
+
 		}
 	}
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/

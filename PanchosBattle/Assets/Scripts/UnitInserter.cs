@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class UnitInserter : MonoBehaviour
 {
-    public Player jugador;
+    private Player jugador;
     private Vector3 Posicion;
+    public BoardController controlador;
     
     //variables de control
     private bool puedeInsertar=false;
@@ -15,14 +16,21 @@ public class UnitInserter : MonoBehaviour
     private bool esArquero=false;
     
     private void Start() {
-        GameObject.Find("AddGuerrero").GetComponentInChildren<Text>().text="Guerreros:"+0;
-        GameObject.Find("AddJinete").GetComponentInChildren<Text>().text="Jinetes:"+0;
-        GameObject.Find("AddArquero").GetComponentInChildren<Text>().text="Arqueros:"+0;
-        
+        GameObject.Find("AddGuerrero1").GetComponentInChildren<Text>().text="Guerreros:"+0;
+        GameObject.Find("AddJinete1").GetComponentInChildren<Text>().text="Jinetes:"+0;
+        GameObject.Find("AddArquero1").GetComponentInChildren<Text>().text="Arqueros:"+0;
+        GameObject.Find("AddGuerrero2").GetComponentInChildren<Text>().text="Guerreros:"+0;
+        GameObject.Find("AddJinete2").GetComponentInChildren<Text>().text="Jinetes:"+0;
+        GameObject.Find("AddArquero2").GetComponentInChildren<Text>().text="Arqueros:"+0;
     }
 
     void Update()
     {
+        if(this.controlador.TurnoPlayer==1){
+            this.jugador = GameObject.Find("Player1").GetComponent<Player>();
+        } else {
+            this.jugador = GameObject.Find("Player2").GetComponent<Player>();            
+        }
         if (puedeInsertar && Input.GetMouseButtonDown( 0 )){
             RaycastHit2D hit2D = Physics2D.Raycast( Camera.main.ScreenToWorldPoint( Input.mousePosition ) , Vector2.zero );
             if (hit2D.collider != null && hit2D.collider.tag == "Tiles"){
@@ -35,7 +43,7 @@ public class UnitInserter : MonoBehaviour
                         Instantiate(unidades[0],this.Posicion,Quaternion.identity);
                         unidades.RemoveAt(0);
 
-                        GameObject.Find("AddGuerrero").GetComponentInChildren<Text>().text="Guerreros:"+unidades.Count;
+                        GameObject.Find("AddGuerrero"+this.controlador.TurnoPlayer).GetComponentInChildren<Text>().text="Guerreros:"+unidades.Count;
                     }
                     this.esGuerrero=false;                  
                 } else if(this.esJinete){
@@ -43,7 +51,7 @@ public class UnitInserter : MonoBehaviour
                     if (unidades.Count > 0){
                         Instantiate(unidades[0],this.Posicion,Quaternion.identity);
                         unidades.RemoveAt(0);
-                        GameObject.Find("AddJinete").GetComponentInChildren<Text>().text="Jinetes:"+unidades.Count;
+                        GameObject.Find("AddJinete"+this.controlador.TurnoPlayer).GetComponentInChildren<Text>().text="Jinetes:"+unidades.Count;
                     }
                     this.esJinete=false;
                 }else {
@@ -51,7 +59,7 @@ public class UnitInserter : MonoBehaviour
                     if (unidades.Count > 0){
                         Instantiate(unidades[0],this.Posicion,Quaternion.identity);
                         unidades.RemoveAt(0);
-                        GameObject.Find("AddArquero").GetComponentInChildren<Text>().text="Arqueros:"+unidades.Count;                        
+                        GameObject.Find("AddArquero"+this.controlador.TurnoPlayer).GetComponentInChildren<Text>().text="Arqueros:"+unidades.Count;                        
                     }             
                     this.esArquero=false;
                 }

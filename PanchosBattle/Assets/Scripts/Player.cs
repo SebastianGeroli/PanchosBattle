@@ -36,7 +36,7 @@ public class Player:MonoBehaviour {
 			Guerreros[x].AddComponent<Units>();
 			Guerreros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
 		}
-        GameObject.Find("AddGuerrero").GetComponentInChildren<Text>().text="Guerreros:"+guerreros.Count;
+        GameObject.Find("AddGuerrero"+this.NumeroPlayer).GetComponentInChildren<Text>().text="Guerreros:"+guerreros.Count;
 		UnidadesTotales++;
 	}
 	public void ComprarJinete() {
@@ -46,7 +46,7 @@ public class Player:MonoBehaviour {
 			Jinetes[x].AddComponent<Units>();
 			Jinetes[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
 		}
-        GameObject.Find("AddJinete").GetComponentInChildren<Text>().text="Jinetes:"+jinetes.Count;
+        GameObject.Find("AddJinete"+this.NumeroPlayer).GetComponentInChildren<Text>().text="Jinetes:"+jinetes.Count;
 		UnidadesTotales++;
 	}
 	public void ComprarArquero() {
@@ -56,7 +56,7 @@ public class Player:MonoBehaviour {
 			Arqueros[x].AddComponent<Units>();
 			Arqueros[x].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
 		}
-        GameObject.Find("AddArquero").GetComponentInChildren<Text>().text="Arqueros:"+arqueros.Count;
+        GameObject.Find("AddArquero"+this.NumeroPlayer).GetComponentInChildren<Text>().text="Arqueros:"+arqueros.Count;
 		UnidadesTotales++;
 	}
 	public void AñadirGuerrero() {
