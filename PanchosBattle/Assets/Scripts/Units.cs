@@ -7,12 +7,12 @@ public class Units:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	int
 		posX,
-		posY, 
-		multiplicadorDeDaño, 
-		damage, 
-		perteneJugador, 
-		rangoAtaque, 
-		vida, 
+		posY,
+		multiplicadorDeDaño,
+		damage,
+		perteneJugador,
+		rangoAtaque,
+		vida,
 		movimiento;
 	bool seRealizoUnaAccion;
 	bool estaEnTablero = false;
@@ -60,7 +60,7 @@ public class Units:MonoBehaviour {
 	public int PosY { get => posY; set => posY = value; }
 	public int PerteneJugador { get => perteneJugador; set => perteneJugador = value; }
 	public bool SeRealizoUnaAccion { get => seRealizoUnaAccion; set => seRealizoUnaAccion = value; }
-	public bool EstaEnTablero { get => estaEnTablero; set => estaEnTablero =  value ; }
+	public bool EstaEnTablero { get => estaEnTablero; set => estaEnTablero = value; }
 
 	/*############################## Metodos ##############################*/
 	private void Update() {

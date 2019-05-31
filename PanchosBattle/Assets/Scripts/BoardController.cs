@@ -109,7 +109,7 @@ public class BoardController:MonoBehaviour {
 	/*Recorre el listado de jugadores si alguno de ellos tiene sus unidades
 	 * totales en 0 o menos se da por terminada la partida y ese jugador pierde*/
 	public void GanoAlguien() {
-		if( turnoGeneral > 0) {
+		if( turnoGeneral > 0 ) {
 			for( int x = 0; x < jugadores.Length; x++ ) {
 				if( jugadores[x].UnidadesTotales <= 0 ) {
 					textGanador.enabled = true;
@@ -232,9 +232,9 @@ public class BoardController:MonoBehaviour {
 				}
 			}
 			for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-				if(jugadores[i].Arqueros[x].GetComponent<Units>().Vida == 0 ) {
+				if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida == 0 ) {
 					destruir = jugadores[i].Arqueros[x];
-					jugadores[i].Arqueros.Remove(jugadores[i].Arqueros[x]);
+					jugadores[i].Arqueros.Remove( jugadores[i].Arqueros[x] );
 					jugadores[i].UnidadesTotales--;
 					Destroy( destruir );
 				}
@@ -305,7 +305,7 @@ public class BoardController:MonoBehaviour {
 		if( turnoGeneral == 0 ) {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
 				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
-					for(int i = 0; i<jugadores.Length;i++ ){
+					for( int i = 0; i < jugadores.Length; i++ ) {
 						for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
 								ClearHighligths();
@@ -331,7 +331,7 @@ public class BoardController:MonoBehaviour {
 							}
 						}
 					}
-				
+
 					if( isAvailable ) {
 						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 						ClearHighligths();
@@ -375,7 +375,7 @@ public class BoardController:MonoBehaviour {
 									}
 								}
 							}
-							
+
 							if( isAvailable ) {
 								unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 								ClearHighligths();
@@ -394,14 +394,14 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Seleccionar Unidad*/
 	public void SeleccionarUnidad( RaycastHit2D hit2D ) {
-		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador == jugadores[turnoPlayer - 1].NumeroPlayer && !hit2D.collider.GetComponent<Units>().SeRealizoUnaAccion) {
+		if( UnidadSeleccionada == null && hit2D.collider.GetComponent<Units>().PerteneJugador == jugadores[turnoPlayer - 1].NumeroPlayer && !hit2D.collider.GetComponent<Units>().SeRealizoUnaAccion ) {
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
 		} else if( UnidadSeleccionada != null && hit2D.collider.GetComponent<Units>().PerteneJugador == UnidadSeleccionada.PerteneJugador && !hit2D.collider.GetComponent<Units>().SeRealizoUnaAccion ) {
 			tileSeleccionada = null;
 			UnidadSeleccionada = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad" );
-		} else if(UnidadSeleccionada!= null) {
+		} else if( UnidadSeleccionada != null ) {
 			UnidadDestino = hit2D.collider.GetComponent<Units>();
 			//		Debug.Log( "Se ha seleccionado una unidad'enemiga" );
 		}
@@ -434,15 +434,15 @@ public class BoardController:MonoBehaviour {
 		if( unidadSeleccionada != null && unidadSeleccionada.EstaEnTablero ) {
 
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento* multiplierX) ) {
-					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento *multiplierY ) ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento * multiplierX ) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento * multiplierY ) ) {
 						entry.Value.HighlightColor = Color.green;
 					}
 				}
 			}
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque *multiplierX) ) {
-					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque*multiplierY ) ) {
+				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque * multiplierX ) ) {
+					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque * multiplierY ) ) {
 						entry.Value.HighlightColor = Color.red;
 					}
 				}
