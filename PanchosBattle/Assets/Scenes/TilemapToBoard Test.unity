@@ -2547,8 +2547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3645365b19aa90c4e8f0ae0b5048bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplierX: 0
-  multiplierY: 0
+  multiplierX: 1
+  multiplierY: 1
   canvasPlayer1: {fileID: 953138549}
   canvasPlayer2: {fileID: 1964973957}
   textTiempo: {fileID: 1511619687}

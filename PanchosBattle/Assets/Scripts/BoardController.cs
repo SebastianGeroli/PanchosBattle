@@ -86,11 +86,9 @@ public class BoardController:MonoBehaviour {
 				TurnoGeneral += 1;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 				unidadSeleccionada = null;
-				ClearHighligths();
-				SetColorSpawns();
 				unidadDestino = null;
 				tileSeleccionada = null;
-				ClearHighligths();
+				ShowRanges();
 			} else {
 				textTurnoPlayer.enabled = true;
 				textTurnoPlayer2.enabled = false;
@@ -99,10 +97,9 @@ public class BoardController:MonoBehaviour {
 				TurnoGeneral += 1;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 				unidadSeleccionada = null;
-				ClearHighligths();
-				SetColorSpawns();
 				unidadDestino = null;
 				tileSeleccionada = null;
+				ShowRanges();
 			}
 		}
 	}
@@ -190,7 +187,6 @@ public class BoardController:MonoBehaviour {
 	public void CheckActions() {
 		Ataque();
 		MoverUnidad();
-		ClearHighligths();
 		ShowRanges();
 		if( Input.GetMouseButtonDown( 0 ) ) {
 			RaycastHit2D hit2D = Physics2D.Raycast( Camera.main.ScreenToWorldPoint( Input.mousePosition ) , Vector2.zero );
@@ -198,7 +194,6 @@ public class BoardController:MonoBehaviour {
 				SeleccionarUnidad( hit2D );
 				Ataque();
 				MoverUnidad();
-				ClearHighligths();
 				ShowRanges();
 
 				//Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
@@ -260,8 +255,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
-						ClearHighligths();
-						SetColorSpawns();
+						ShowRanges();
 						unidadSeleccionada = null;
 						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
@@ -269,8 +263,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
-						ClearHighligths();
-						SetColorSpawns();
+						ShowRanges();
 						unidadSeleccionada = null;
 						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
@@ -278,8 +271,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
-						ClearHighligths();
-						SetColorSpawns();
+						ShowRanges();
 						unidadSeleccionada = null;
 						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3" );
@@ -287,8 +279,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino.Vida -= unidadSeleccionada.Damage;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
-						ClearHighligths();
-						SetColorSpawns();
+						ShowRanges();
 						unidadSeleccionada = null;
 						unidadDestino = null;
 						///	Debug.Log( "Ataque" );
@@ -308,24 +299,21 @@ public class BoardController:MonoBehaviour {
 					for( int i = 0; i < jugadores.Length; i++ ) {
 						for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
+								ShowRanges();
 								tileSeleccionada = null;
 								isAvailable = false;
 							}
 						}
 						for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
+								ShowRanges();
 								tileSeleccionada = null;
 								isAvailable = false;
 							}
 						}
 						for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
 							if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
+								ShowRanges();
 								tileSeleccionada = null;
 								isAvailable = false;
 							}
@@ -334,8 +322,7 @@ public class BoardController:MonoBehaviour {
 
 					if( isAvailable ) {
 						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
-						ClearHighligths();
-						SetColorSpawns();
+						ShowRanges();
 						unidadSeleccionada.EstaEnTablero = true;
 						unidadSeleccionada = null;
 						tileSeleccionada = null;
@@ -352,24 +339,21 @@ public class BoardController:MonoBehaviour {
 							for( int i = 0; i < jugadores.Length; i++ ) {
 								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
+										ShowRanges();
 										tileSeleccionada = null;
 										isAvailable = false;
 									}
 								}
 								for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
+										ShowRanges();
 										tileSeleccionada = null;
 										isAvailable = false;
 									}
 								}
 								for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
+										ShowRanges();
 										tileSeleccionada = null;
 										isAvailable = false;
 									}
@@ -378,8 +362,7 @@ public class BoardController:MonoBehaviour {
 
 							if( isAvailable ) {
 								unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
-								ClearHighligths();
-								SetColorSpawns();
+								ShowRanges();
 								unidadSeleccionada.SeRealizoUnaAccion = true;
 								unidadSeleccionada.EstaEnTablero = true;
 								unidadSeleccionada = null;
@@ -408,15 +391,17 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Selecciona las tiles*/
 	public void SeleccionarTile( RaycastHit2D hit2D ) {
-
-		if( tileSeleccionada != hit2D.collider.GetComponent<Tile>() && tileSeleccionada != null ) {
-			tileSeleccionada.HighlightColor = Color.clear;
-			tileSeleccionada = hit2D.collider.GetComponent<Tile>();
-			tileSeleccionada.HighlightColor = Color.black;
-		} else {
-			tileSeleccionada = hit2D.collider.GetComponent<Tile>();
-			tileSeleccionada.HighlightColor = Color.black;
+		if(unidadSeleccionada != null) {
+			if( tileSeleccionada != hit2D.collider.GetComponent<Tile>() && tileSeleccionada != null ) {
+				tileSeleccionada.HighlightColor = Color.clear;
+				tileSeleccionada = hit2D.collider.GetComponent<Tile>();
+				tileSeleccionada.HighlightColor = Color.black;
+			} else {
+				tileSeleccionada = hit2D.collider.GetComponent<Tile>();
+				tileSeleccionada.HighlightColor = Color.black;
+			}
 		}
+		
 		//Debug.Log( "Se ha seleccionado una tile" );
 	}
 	/*Cheackear distancia en base a los rangos de movieminto y ataque si se encuentra dentro del rango devuelve true*/
@@ -429,6 +414,7 @@ public class BoardController:MonoBehaviour {
 	}
 	/*ShowRange*/
 	public void ShowRanges() {
+		Color tmp;
 		ClearHighligths();
 		SetColorSpawns();
 		if( unidadSeleccionada != null && unidadSeleccionada.EstaEnTablero ) {
@@ -436,14 +422,20 @@ public class BoardController:MonoBehaviour {
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
 				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento * multiplierX ) ) {
 					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento * multiplierY ) ) {
-						entry.Value.HighlightColor = Color.green;
+						tmp = entry.Value.HighlightColor;
+						tmp = Color.green;
+						tmp.a = 0.2f;
+						entry.Value.HighlightColor = tmp;
 					}
 				}
 			}
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
 				if( CheckDistance( entry.Value.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque * multiplierX ) ) {
 					if( CheckDistance( entry.Value.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque * multiplierY ) ) {
-						entry.Value.HighlightColor = Color.red;
+						tmp = entry.Value.BaseColor;
+						tmp = Color.red;
+						tmp.a = 0.3f;
+						entry.Value.HighlightColor = tmp;
 					}
 				}
 			}
@@ -454,23 +446,45 @@ public class BoardController:MonoBehaviour {
 	/*Limpia todo el tablero*/
 	public void ClearHighligths() {
 		foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-			entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>("Textures/Spawn");
-			//entry.Value.HighlightColor = Color.clear;
+			entry.Value.Sprite = Resources.Load<Sprite>("Textures/Caminable");
+			entry.Value.HighlightColor = Color.clear;
+			
 		}
 	}
 	/*Redibuja los spawns de color */
 	public void SetColorSpawns() {
+		Color tmp;
 		if( turnoGeneral == 0 ) {
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
 				if( entry.Value.SpawneableForPlayerNumber == 1 ) {
-					entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>( "Textures/NoCaminable" );
-					entry.Value.HighlightColor = Color.red;
-					//entry.Value.HighlightColor = Color.clear;
+					entry.Value.Sprite = Resources.Load<Sprite>( "Textures/Spawn" );
+					tmp = entry.Value.HighlightColor;
+					tmp.r = 0;
+					tmp.b = 255;
+					tmp.g = 0;
+					tmp.a = 0.2f;
+					entry.Value.HighlightColor = tmp;
+
+
 				}
 				if( entry.Value.SpawneableForPlayerNumber == 2 ) {
-					entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>( "Textures/NoCaminable" );
-					entry.Value.HighlightColor = Color.blue;
-					//entry.Value.HighlightColor = Color.clear;
+					entry.Value.Sprite = Resources.Load<Sprite>( "Textures/Spawn" );
+					tmp = entry.Value.HighlightColor;
+					tmp.r = 255;
+					tmp.b = 0;
+					tmp.g = 0;
+					tmp.a = 0.2f;
+					entry.Value.HighlightColor = tmp;
+				}
+			}
+		} else {
+
+			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
+				if( entry.Value.SpawneableForPlayerNumber == 1 ) {
+					entry.Value.Sprite = Resources.Load<Sprite>( "Textures/Spawn" );
+				}
+				if( entry.Value.SpawneableForPlayerNumber == 2 ) {
+					entry.Value.Sprite = Resources.Load<Sprite>( "Textures/Spawn" );
 				}
 			}
 		}

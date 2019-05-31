@@ -30,8 +30,9 @@ public class Tile:MonoBehaviour {
     [SerializeField]
     private SpriteRenderer baseSprite = default;
     public Sprite Sprite { get => baseSprite.sprite; set => baseSprite.sprite = value; }
+	public Color BaseColor { get => baseSprite.color; set => baseSprite.color = value; }
 
-    [SerializeField]
+	[SerializeField]
 	private SpriteRenderer highlightSprite = default;
 	public Color HighlightColor { get => highlightSprite.color; set => highlightSprite.color = value; }
 	public SpriteRenderer HighlightSprite { get => highlightSprite; set => highlightSprite = value; }
