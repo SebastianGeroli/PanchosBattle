@@ -208,14 +208,32 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
 	public void CheckearVidaUnidad() {
-		if( unidadDestino.Vida <= 0 ) {
-			unidadDestino.gameObject.SetActive( false );
-			if( jugadores[0].NumeroPlayer == unidadDestino.PerteneJugador ) {
-				jugadores[0].UnidadesTotales -= 1;
-			} else {
-				jugadores[1].UnidadesTotales -= 1;
+		GameObject destruir;
+		for( int i = 0; i < jugadores.Length; i++ ) {
+			for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
+				if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida == 0 ) {
+					destruir = jugadores[i].Guerreros[x];
+					jugadores[i].Guerreros.Remove( jugadores[i].Guerreros[x] );
+					jugadores[i].UnidadesTotales--;
+					Destroy( destruir );
+				}
 			}
-			//Debug.Log( "Entre Enabled" );
+			for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
+				if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida == 0 ) {
+					destruir = jugadores[i].Jinetes[x];
+					jugadores[i].Jinetes.Remove( jugadores[i].Jinetes[x] );
+					jugadores[i].UnidadesTotales--;
+					Destroy( destruir );
+				}
+			}
+			for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
+				if(jugadores[i].Arqueros[x].GetComponent<Units>().Vida == 0 ) {
+					destruir = jugadores[i].Arqueros[x];
+					jugadores[i].Arqueros.Remove(jugadores[i].Arqueros[x]);
+					jugadores[i].UnidadesTotales--;
+					Destroy( destruir );
+				}
+			}
 		}
 	}
 	/*Convert Dictionary from board to Array */
