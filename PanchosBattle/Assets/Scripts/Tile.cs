@@ -28,6 +28,7 @@ public class Tile:MonoBehaviour {
 	[SerializeField]
 	private SpriteRenderer highlightSprite = default;
 	public Color HighlightColor { get => highlightSprite.color; set => highlightSprite.color = value; }
+	public SpriteRenderer HighlightSprite { get => highlightSprite; set => highlightSprite = value; }
 
 	public Board Board { get; internal set; }
 	public Vector2Int Coordinates { get; internal set; }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6026903875051732322
+--- !u!1 &3695140384049613961
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5783103018896223152}
-  - component: {fileID: 3737752265404833016}
+  - component: {fileID: 6448457485865900290}
+  - component: {fileID: 4693568408241110167}
   m_Layer: 0
   m_Name: SpriteRender
   m_TagString: Untagged
@@ -17,27 +17,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5783103018896223152
+--- !u!4 &6448457485865900290
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6026903875051732322}
+  m_GameObject: {fileID: 3695140384049613961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.093, y: 1.07, z: 0}
+  m_LocalPosition: {x: -0.28, y: 1.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6153145089431779595}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3737752265404833016
+--- !u!212 &4693568408241110167
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6026903875051732322}
+  m_GameObject: {fileID: 3695140384049613961}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cfb1e49ecf4b30f4b8e6f26a04cf6f7c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f4821fd6d1d0ef44f87dd8b5785f227e, type: 3}
   m_Color: {r: 0.8349056, g: 0.8607016, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1474815357920611920}
   - component: {fileID: 3967541686485273959}
   m_Layer: 0
-  m_Name: textVida
+  m_Name: texTVida
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: -5286329721790911128}
   - component: {fileID: 2155429805494196233}
   m_Layer: 0
-  m_Name: Guerrero2
+  m_Name: Arquero2
   m_TagString: Units
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,11 +210,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9019454191535894811}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.165, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 6876795769308433282}
-  - {fileID: 5783103018896223152}
+  - {fileID: 6448457485865900290}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -256,14 +256,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.22759017, y: 2.19096}
-      - {x: -0.60161364, y: 2.0366454}
-      - {x: -0.72442585, y: 1.2887863}
-      - {x: -0.50660086, y: 0.4313392}
-      - {x: -0.27696633, y: 0.15366185}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.8037651, y: 0.20438963}
-      - {x: 0.8471533, y: 0.4238747}
-      - {x: 0.2321226, y: 1.0274284}
-      - {x: 0.40360922, y: 1.8882318}
+    - - {x: -0.036474675, y: 2.6345792}
+      - {x: -0.4698978, y: 2.419858}
+      - {x: -0.5, y: 0.5}
+      - {x: -0.48728567, y: -0.042285472}
+      - {x: 0.36014295, y: -0.08042857}
+      - {x: 0.83485126, y: 0.6834661}
+      - {x: 0.5890002, y: 2.4961438}

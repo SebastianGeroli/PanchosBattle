@@ -1,9 +1,0 @@
-diff a/PanchosBattle/Assets/Scripts/Player.cs b/PanchosBattle/Assets/Scripts/Player.cs	(rejected hunks)
-@@ -46,7 +46,6 @@
- 		} else {
- 			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
- 		}
--		GO.transform.parent = transform;
- 		Jinetes.Add( GO );
- 		Jinetes[jinetes.Count - 1].transform.SetParent( transform );
- 		Jinetes[jinetes.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );

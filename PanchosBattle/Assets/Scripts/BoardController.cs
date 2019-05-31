@@ -454,7 +454,8 @@ public class BoardController:MonoBehaviour {
 	/*Limpia todo el tablero*/
 	public void ClearHighligths() {
 		foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-			entry.Value.HighlightColor = Color.clear;
+			entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>("Textures/Spawn");
+			//entry.Value.HighlightColor = Color.clear;
 		}
 	}
 	/*Redibuja los spawns de color */
@@ -462,10 +463,14 @@ public class BoardController:MonoBehaviour {
 		if( turnoGeneral == 0 ) {
 			foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
 				if( entry.Value.SpawneableForPlayerNumber == 1 ) {
-					entry.Value.HighlightColor = Color.magenta;
+					entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>( "Textures/NoCaminable" );
+					entry.Value.HighlightColor = Color.red;
+					//entry.Value.HighlightColor = Color.clear;
 				}
 				if( entry.Value.SpawneableForPlayerNumber == 2 ) {
-					entry.Value.HighlightColor = Color.cyan;
+					entry.Value.HighlightSprite.sprite = Resources.Load<Sprite>( "Textures/NoCaminable" );
+					entry.Value.HighlightColor = Color.blue;
+					//entry.Value.HighlightColor = Color.clear;
 				}
 			}
 		}
