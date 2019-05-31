@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
+	bool paso = false;
 	public float multiplierX, multiplierY;
 	public Canvas canvasPlayer1, canvasPlayer2;
 	public Text textTiempo, textTurnoPlayer, textTurnoGeneral, textTurnoPlayer2, textGanador;
@@ -79,6 +80,7 @@ public class BoardController:MonoBehaviour {
 
 		if( TiempoRestante <= 0 ) {
 			if( TurnoPlayer == 1 ) {
+				CheckearVidaUnidad();
 				textTurnoPlayer.enabled = false;
 				textTurnoPlayer2.enabled = true;
 				TurnoPlayer = 2;
@@ -90,6 +92,7 @@ public class BoardController:MonoBehaviour {
 				tileSeleccionada = null;
 				ShowRanges();
 			} else {
+				CheckearVidaUnidad();
 				textTurnoPlayer.enabled = true;
 				textTurnoPlayer2.enabled = false;
 				turnoPlayer = 1;
@@ -123,6 +126,7 @@ public class BoardController:MonoBehaviour {
 	/*Muestra la UI de compra durante el turno 0 luego de este empiezan a jugar
 	 * y pone los datos necesarios para el proximo turno al vencerse el tiempo*/
 	public void MostrarUICompra() {
+
 		if( TurnoGeneral == 0 && TiempoRestante >= 0 ) {
 			if( TiempoRestante > 30 ) {
 				turnoPlayer = 1;
@@ -132,6 +136,10 @@ public class BoardController:MonoBehaviour {
 				textTurnoPlayer2.enabled = false;
 				textTurnoGeneral.text = "Turno Nro: " + turnoGeneral.ToString();
 			} else {
+				if( paso == false ) {
+					CheckearVidaUnidad();
+					paso = true;
+				}
 				turnoPlayer = 2;
 				canvasPlayer1.enabled = false;
 				canvasPlayer2.enabled = true;
@@ -209,32 +217,35 @@ public class BoardController:MonoBehaviour {
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
 	public void CheckearVidaUnidad() {
 		GameObject destruir;
-		for( int i = 0; i < jugadores.Length; i++ ) {
-			for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
-				if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida <= 0 ) {
-					destruir = jugadores[i].Guerreros[x];
-					jugadores[i].Guerreros.Remove( jugadores[i].Guerreros[x] );
-					jugadores[i].UnidadesTotales--;
-					Destroy( destruir );
+		for( int l = 0; l < 20; l++ ) {
+			for( int i = 0; i < jugadores.Length; i++ ) {
+				for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
+					if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida <= 0 || jugadores[i].Guerreros[x].GetComponent<Units>().EstaEnTablero == false ) {
+						destruir = jugadores[i].Guerreros[x];
+						jugadores[i].Guerreros.Remove( jugadores[i].Guerreros[x] );
+						jugadores[i].UnidadesTotales--;
+						Destroy( destruir );
+					}
 				}
-			}
-			for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
-				if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida <= 0 ) {
-					destruir = jugadores[i].Jinetes[x];
-					jugadores[i].Jinetes.Remove( jugadores[i].Jinetes[x] );
-					jugadores[i].UnidadesTotales--;
-					Destroy( destruir );
+				for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
+					if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida <= 0 || jugadores[i].Jinetes[x].GetComponent<Units>().EstaEnTablero == false ) {
+						destruir = jugadores[i].Jinetes[x];
+						jugadores[i].Jinetes.Remove( jugadores[i].Jinetes[x] );
+						jugadores[i].UnidadesTotales--;
+						Destroy( destruir );
+					}
 				}
-			}
-			for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-				if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida <= 0 ) {
-					destruir = jugadores[i].Arqueros[x];
-					jugadores[i].Arqueros.Remove( jugadores[i].Arqueros[x] );
-					jugadores[i].UnidadesTotales--;
-					Destroy( destruir );
+				for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
+					if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida <= 0 || jugadores[i].Arqueros[x].GetComponent<Units>().EstaEnTablero == false ) {
+						destruir = jugadores[i].Arqueros[x];
+						jugadores[i].Arqueros.Remove( jugadores[i].Arqueros[x] );
+						jugadores[i].UnidadesTotales--;
+						Destroy( destruir );
+					}
 				}
 			}
 		}
+
 	}
 	/*Convert Dictionary from board to Array */
 	public void SetTilesTag() {
@@ -250,7 +261,7 @@ public class BoardController:MonoBehaviour {
 	public void Ataque() {
 		if( unidadSeleccionada != null && unidadDestino != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
 			if( CheckDistance( unidadDestino.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque * multiplierX ) ) {
-				if( CheckDistance( unidadDestino.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque* multiplierY ) ) {
+				if( CheckDistance( unidadDestino.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque * multiplierY ) ) {
 					if( unidadSeleccionada.tipounidad == TipoUnidad.Guerrero && unidadDestino.tipounidad == TipoUnidad.Jinete ) {
 						unidadDestino.Vida -= unidadSeleccionada.Damage * 3;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
@@ -334,8 +345,8 @@ public class BoardController:MonoBehaviour {
 		} else {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
 				if( unidadSeleccionada.EstaEnTablero ) {
-					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento* multiplierX ) ) {
-						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento* multiplierY ) ) {
+					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento * multiplierX ) ) {
+						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento * multiplierY ) ) {
 							for( int i = 0; i < jugadores.Length; i++ ) {
 								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
@@ -391,7 +402,7 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Selecciona las tiles*/
 	public void SeleccionarTile( RaycastHit2D hit2D ) {
-		if(unidadSeleccionada != null) {
+		if( unidadSeleccionada != null ) {
 			if( tileSeleccionada != hit2D.collider.GetComponent<Tile>() && tileSeleccionada != null ) {
 				tileSeleccionada.HighlightColor = Color.clear;
 				tileSeleccionada = hit2D.collider.GetComponent<Tile>();
@@ -401,7 +412,7 @@ public class BoardController:MonoBehaviour {
 				tileSeleccionada.HighlightColor = Color.black;
 			}
 		}
-		
+
 		//Debug.Log( "Se ha seleccionado una tile" );
 	}
 	/*Cheackear distancia en base a los rangos de movieminto y ataque si se encuentra dentro del rango devuelve true*/
@@ -446,9 +457,9 @@ public class BoardController:MonoBehaviour {
 	/*Limpia todo el tablero*/
 	public void ClearHighligths() {
 		foreach( KeyValuePair<Vector2Int , Tile> entry in board.TilesDictionary ) {
-			entry.Value.Sprite = Resources.Load<Sprite>("Textures/Caminable");
+			entry.Value.Sprite = Resources.Load<Sprite>( "Textures/Caminable" );
 			entry.Value.HighlightColor = Color.clear;
-			
+
 		}
 	}
 	/*Redibuja los spawns de color */
