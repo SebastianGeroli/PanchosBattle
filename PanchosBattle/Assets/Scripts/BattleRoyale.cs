@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRoyale{
+public class BattleRoyale {
 	/*############################## Variables ##############################*/
 	int contadorDeVeces = 0;
 	/*############################## Getters&&Setters ##############################*/

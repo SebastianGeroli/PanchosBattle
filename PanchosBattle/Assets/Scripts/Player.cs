@@ -30,42 +30,38 @@ public class Player:MonoBehaviour {
 	public void ComprarGuerrero() {
 		GameObject GO;
 		if( NumeroPlayer % 2 == 0 ) {
-		 GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Guerrero2" ) ) as GameObject;
 		} else {
-		 GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Guerrero" ) ) as GameObject;
 		}
-		
-		GO.transform.parent = transform;
 		Guerreros.Add( GO );
-		Guerreros[guerreros.Count - 1].transform.parent = transform;
+		Guerreros[guerreros.Count - 1].transform.SetParent( transform );
 		Guerreros[guerreros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
 		UnidadesTotales++;
 	}
-public void ComprarJinete() {
+	public void ComprarJinete() {
 		GameObject GO;
 		if( NumeroPlayer % 2 == 0 ) {
-			GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Jinete2" ) ) as GameObject;
 		} else {
-			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Jinete" ) ) as GameObject;
 		}
-		GO.transform.parent = transform;
 		Jinetes.Add( GO );
-		Jinetes[jinetes.Count - 1].transform.parent = transform;
+		Jinetes[jinetes.Count - 1].transform.SetParent( transform );
 		Jinetes[jinetes.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
 		UnidadesTotales++;
 	}
-public void ComprarArquero() {
+	public void ComprarArquero() {
 		GameObject GO;
 		if( NumeroPlayer % 2 == 0 ) {
-			GO = Instantiate( Resources.Load( "Unidad2" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Arquero2" ) ) as GameObject;
 		} else {
-			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
+			GO = Instantiate( Resources.Load( "Arquero" ) ) as GameObject;
 		}
-		GO.transform.parent = transform;
 		Arqueros.Add( GO );
-		Arqueros[arqueros.Count - 1].transform.parent = transform;
+		Arqueros[arqueros.Count - 1].transform.SetParent( transform );
 		Arqueros[arqueros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
 		UnidadesTotales++;
 		UnidadesTotales++;
-}
+	}
 }
