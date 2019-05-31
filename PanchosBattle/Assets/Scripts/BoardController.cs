@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
 	public Canvas canvasPlayer1, canvasPlayer2;
 	public Text textTiempo, textTurnoPlayer, textTurnoGeneral, textTurnoPlayer2, textGanador;
+	public Button playAgain;
 	public Board board;
 	public Player[] jugadores;
 	BattleRoyale battleRoyale = new BattleRoyale();
@@ -40,6 +42,7 @@ public class BoardController:MonoBehaviour {
 		GanoAlguien();
 	}
 	private void Awake() {
+		playAgain.gameObject.SetActive( false );
 		SetPlayers();
 		TiempoRestante = 60;
 		TurnoGeneral = 0;
@@ -109,6 +112,7 @@ public class BoardController:MonoBehaviour {
 			for( int x = 0; x < jugadores.Length; x++ ) {
 				if( jugadores[x].UnidadesTotales <= 0 ) {
 					textGanador.enabled = true;
+					playAgain.gameObject.SetActive( true );
 					if( x == 0 ) {
 						textGanador.text = "Ganador: \n Jugador 2";
 					} else {
@@ -472,5 +476,9 @@ public class BoardController:MonoBehaviour {
 		} else {
 			tiempoRestante = 1;
 		}
+	}
+	/*Volver a cargar la escena*/
+	public void PlayAgain() {
+		SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
 	}
 }
