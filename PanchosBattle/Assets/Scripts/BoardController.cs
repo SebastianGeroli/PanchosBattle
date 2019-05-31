@@ -182,7 +182,7 @@ public class BoardController:MonoBehaviour {
 				MoverUnidad();
 				//Debug.Log( "Se ha seleccionado a: " + hit2D.collider.gameObject.name + " que esta en la posicion: " + hit2D.collider.transform.position );
 			}
-
+			
 		}
 	}
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
