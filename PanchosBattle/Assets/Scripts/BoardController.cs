@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BoardController:MonoBehaviour {
 	/*############################## Variables ##############################*/
+	int totalunits =0;
 	bool paso = false;
 	public float multiplierX, multiplierY;
 	public Canvas canvasPlayer1, canvasPlayer2;
@@ -109,6 +110,7 @@ public class BoardController:MonoBehaviour {
 	/*Recorre el listado de jugadores si alguno de ellos tiene sus unidades
 	 * totales en 0 o menos se da por terminada la partida y ese jugador pierde*/
 	public void GanoAlguien() {
+		totalunits = 0;
 		if( turnoGeneral > 0 ) {
 			for( int x = 0; x < jugadores.Length; x++ ) {
 				if( jugadores[x].UnidadesTotales <= 0 ) {
@@ -121,6 +123,21 @@ public class BoardController:MonoBehaviour {
 					}
 				}
 			}
+			for( int x = 0; x < jugadores.Length; x++ ) {
+				totalunits += jugadores[x].Guerreros.Count;
+				totalunits += jugadores[x].Jinetes.Count;
+				totalunits += jugadores[x].Arqueros.Count;
+				if( totalunits <= 0 ) {
+					textGanador.enabled = true;
+					playAgain.gameObject.SetActive( true );
+					if( x == 0 ) {
+						textGanador.text = "Ganador: \n Jugador 2";
+					} else {
+						textGanador.text = "Ganador: \n Jugador 1";
+					}
+				}
+			}
+			
 		}
 	}
 	/*Muestra la UI de compra durante el turno 0 luego de este empiezan a jugar
