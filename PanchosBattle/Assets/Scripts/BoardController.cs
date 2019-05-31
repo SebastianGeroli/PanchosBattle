@@ -161,7 +161,6 @@ public class BoardController:MonoBehaviour {
 		if( TurnoPlayer == 2 ) {
 			for( int x = 0; x < jugadores[0].Guerreros.Count; x++ ) {
 				jugadores[0].Guerreros[x].GetComponent<Units>().SeRealizoUnaAccion = false;
-
 			}
 			for( int x = 0; x < jugadores[0].Jinetes.Count; x++ ) {
 				jugadores[0].Jinetes[x].GetComponent<Units>().SeRealizoUnaAccion = false;
@@ -205,43 +204,8 @@ public class BoardController:MonoBehaviour {
 	}
 	/*Verifia si la unidad a llegado a 0 de vida si es asi la destruye*/
 	public void CheckearVidaUnidad() {
-		GameObject gameObjectADestruir;
-		for( int i = 0; i < jugadores.Length; i++ ) {
-			for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
-				if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida == 0 ) {
-					gameObjectADestruir = jugadores[i].Guerreros[x];
-					if( jugadores[i].NumeroPlayer == gameObjectADestruir.GetComponent<Units>().PerteneJugador) {
-						jugadores[i].UnidadesTotales -= 1;
-					}
-					jugadores[i].Guerreros.Remove( jugadores[i].Guerreros[x] );
-					Destroy( gameObjectADestruir );
-
-				}
-
-			}
-			for( int x = 0; x < jugadores[0].Jinetes.Count; x++ ) {
-				if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida == 0 ) {
-					gameObjectADestruir = jugadores[i].Jinetes[x];
-					if( jugadores[i].NumeroPlayer == gameObjectADestruir.GetComponent<Units>().PerteneJugador ) {
-						jugadores[i].UnidadesTotales -= 1;
-					}
-					jugadores[i].Jinetes.Remove( jugadores[i].Jinetes[x] );
-					Destroy( gameObjectADestruir );
-				}
-			}
-			for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-				if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida == 0 ) {
-					gameObjectADestruir = jugadores[i].Arqueros[x];
-					if( jugadores[i].NumeroPlayer == gameObjectADestruir.GetComponent<Units>().PerteneJugador ) {
-						jugadores[i].UnidadesTotales -= 1;
-					}
-					jugadores[i].Arqueros.Remove( jugadores[i].Arqueros[x] );
-					Destroy( gameObjectADestruir );
-				}
-			}
-		}
 		if( unidadDestino.Vida <= 0 ) {
-			Destroy( unidadDestino.gameObject );
+			unidadDestino.gameObject.SetActive( false );
 			if( jugadores[0].NumeroPlayer == unidadDestino.PerteneJugador ) {
 				jugadores[0].UnidadesTotales -= 1;
 			} else {
@@ -314,33 +278,30 @@ public class BoardController:MonoBehaviour {
 		if( turnoGeneral == 0 ) {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.EstaEnTablero == false ) {
 				if( tileSeleccionada.SpawneableForPlayerNumber == unidadSeleccionada.PerteneJugador ) {
-					for( int i = 0; i < jugadores.Length; i++ ) {
-						for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
-							if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
-								tileSeleccionada = null;
-								isAvailable = false;
-							}
-						}
-						for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
-							if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
-								tileSeleccionada = null;
-								isAvailable = false;
-							}
-						}
-						for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-							if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
-								ClearHighligths();
-								SetColorSpawns();
-								tileSeleccionada = null;
-								isAvailable = false;
-							}
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
+							ClearHighligths();
+							SetColorSpawns();
+							tileSeleccionada = null;
+							isAvailable = false;
 						}
 					}
-					
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
+							ClearHighligths();
+							SetColorSpawns();
+							tileSeleccionada = null;
+							isAvailable = false;
+						}
+					}
+					for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
+						if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
+							ClearHighligths();
+							SetColorSpawns();
+							tileSeleccionada = null;
+							isAvailable = false;
+						}
+					}
 					if( isAvailable ) {
 						unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 						ClearHighligths();
@@ -358,33 +319,30 @@ public class BoardController:MonoBehaviour {
 				if( unidadSeleccionada.EstaEnTablero ) {
 					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
 						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
-							for( int i = 0; i < jugadores.Length; i++ ) {
-								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
-									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
-										tileSeleccionada = null;
-										isAvailable = false;
-									}
-								}
-								for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
-									if( tileSeleccionada.transform.position == jugadores[i].Jinetes[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
-										tileSeleccionada = null;
-										isAvailable = false;
-									}
-								}
-								for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-									if( tileSeleccionada.transform.position == jugadores[i].Arqueros[x].transform.position ) {
-										ClearHighligths();
-										SetColorSpawns();
-										tileSeleccionada = null;
-										isAvailable = false;
-									}
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Guerreros.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Guerreros[x].transform.position ) {
+									ClearHighligths();
+									SetColorSpawns();
+									tileSeleccionada = null;
+									isAvailable = false;
 								}
 							}
-							
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Jinetes.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Jinetes[x].transform.position ) {
+									ClearHighligths();
+									SetColorSpawns();
+									tileSeleccionada = null;
+									isAvailable = false;
+								}
+							}
+							for( int x = 0; x < jugadores[turnoPlayer - 1].Arqueros.Count; x++ ) {
+								if( tileSeleccionada.transform.position == jugadores[turnoPlayer - 1].Arqueros[x].transform.position ) {
+									ClearHighligths();
+									SetColorSpawns();
+									tileSeleccionada = null;
+									isAvailable = false;
+								}
+							}
 							if( isAvailable ) {
 								unidadSeleccionada.transform.position = tileSeleccionada.transform.position;
 								ClearHighligths();
