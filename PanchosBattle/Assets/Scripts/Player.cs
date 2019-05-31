@@ -34,8 +34,6 @@ public class Player:MonoBehaviour {
 		} else {
 			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
 		}
-
-		GO.transform.parent = transform;
 		Guerreros.Add( GO );
 		Guerreros[guerreros.Count - 1].transform.SetParent( transform );
 		Guerreros[guerreros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Guerrero , numeroPlayer );
@@ -48,7 +46,6 @@ public class Player:MonoBehaviour {
 		} else {
 			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
 		}
-		GO.transform.parent = transform;
 		Jinetes.Add( GO );
 		Jinetes[jinetes.Count - 1].transform.SetParent( transform );
 		Jinetes[jinetes.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Jinete , numeroPlayer );
@@ -61,7 +58,6 @@ public class Player:MonoBehaviour {
 		} else {
 			GO = Instantiate( Resources.Load( "Unidad" ) ) as GameObject;
 		}
-		GO.transform.parent = transform;
 		Arqueros.Add( GO );
 		Arqueros[arqueros.Count - 1].transform.SetParent( transform );
 		Arqueros[arqueros.Count - 1].GetComponent<Units>().UnitsInicial( TipoUnidad.Arquero , numeroPlayer );
