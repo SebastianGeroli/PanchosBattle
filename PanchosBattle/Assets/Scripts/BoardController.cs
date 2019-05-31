@@ -211,7 +211,7 @@ public class BoardController:MonoBehaviour {
 		GameObject destruir;
 		for( int i = 0; i < jugadores.Length; i++ ) {
 			for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
-				if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida == 0 ) {
+				if( jugadores[i].Guerreros[x].GetComponent<Units>().Vida <= 0 ) {
 					destruir = jugadores[i].Guerreros[x];
 					jugadores[i].Guerreros.Remove( jugadores[i].Guerreros[x] );
 					jugadores[i].UnidadesTotales--;
@@ -219,7 +219,7 @@ public class BoardController:MonoBehaviour {
 				}
 			}
 			for( int x = 0; x < jugadores[i].Jinetes.Count; x++ ) {
-				if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida == 0 ) {
+				if( jugadores[i].Jinetes[x].GetComponent<Units>().Vida <= 0 ) {
 					destruir = jugadores[i].Jinetes[x];
 					jugadores[i].Jinetes.Remove( jugadores[i].Jinetes[x] );
 					jugadores[i].UnidadesTotales--;
@@ -227,7 +227,7 @@ public class BoardController:MonoBehaviour {
 				}
 			}
 			for( int x = 0; x < jugadores[i].Arqueros.Count; x++ ) {
-				if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida == 0 ) {
+				if( jugadores[i].Arqueros[x].GetComponent<Units>().Vida <= 0 ) {
 					destruir = jugadores[i].Arqueros[x];
 					jugadores[i].Arqueros.Remove( jugadores[i].Arqueros[x] );
 					jugadores[i].UnidadesTotales--;
@@ -249,10 +249,10 @@ public class BoardController:MonoBehaviour {
 	/*Ataque*/
 	public void Ataque() {
 		if( unidadSeleccionada != null && unidadDestino != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
-			if( CheckDistance( unidadDestino.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque ) ) {
-				if( CheckDistance( unidadDestino.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque ) ) {
+			if( CheckDistance( unidadDestino.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.RangoAtaque * multiplierX ) ) {
+				if( CheckDistance( unidadDestino.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.RangoAtaque* multiplierY ) ) {
 					if( unidadSeleccionada.tipounidad == TipoUnidad.Guerrero && unidadDestino.tipounidad == TipoUnidad.Jinete ) {
-						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
+						unidadDestino.Vida -= unidadSeleccionada.Damage * 3;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
 						ShowRanges();
@@ -260,7 +260,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
 					} else if( unidadSeleccionada.tipounidad == TipoUnidad.Arquero && unidadDestino.tipounidad == TipoUnidad.Guerrero ) {
-						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
+						unidadDestino.Vida -= unidadSeleccionada.Damage * 3;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
 						ShowRanges();
@@ -268,7 +268,7 @@ public class BoardController:MonoBehaviour {
 						unidadDestino = null;
 						//	Debug.Log( "Ataque x 3 " );
 					} else if( unidadSeleccionada.tipounidad == TipoUnidad.Jinete && unidadDestino.tipounidad == TipoUnidad.Arquero ) {
-						unidadDestino.Vida -= unidadSeleccionada.Damage * unidadSeleccionada.MultiplicadorDeDaño;
+						unidadDestino.Vida -= unidadSeleccionada.Damage * 3;
 						unidadSeleccionada.SeRealizoUnaAccion = true;
 						CheckearVidaUnidad();
 						ShowRanges();
@@ -334,8 +334,8 @@ public class BoardController:MonoBehaviour {
 		} else {
 			if( unidadSeleccionada != null && tileSeleccionada != null && unidadSeleccionada.SeRealizoUnaAccion == false ) {
 				if( unidadSeleccionada.EstaEnTablero ) {
-					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento ) ) {
-						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento ) ) {
+					if( CheckDistance( tileSeleccionada.transform.position.x , unidadSeleccionada.transform.position.x , unidadSeleccionada.Movimiento* multiplierX ) ) {
+						if( CheckDistance( tileSeleccionada.transform.position.y , unidadSeleccionada.transform.position.y , unidadSeleccionada.Movimiento* multiplierY ) ) {
 							for( int i = 0; i < jugadores.Length; i++ ) {
 								for( int x = 0; x < jugadores[i].Guerreros.Count; x++ ) {
 									if( tileSeleccionada.transform.position == jugadores[i].Guerreros[x].transform.position ) {
