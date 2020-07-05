@@ -1,21 +1,13 @@
 fileFormatVersion: 2
 guid: a47d39e871c33cb49a4127774c56ad97
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -1398648523504860632
-    second: LaweaSalchichonTiles_0
-  - first:
-      213: -4031992053832554035
-    second: LaweaSalchichonTiles_1
-  - first:
-      213: -7488079819383507604
-    second: LaweaSalchichonTiles_2
-  - first:
-      213: -8385529190830335010
-    second: LaweaSalchichonTiles_3
+  fileIDToRecycleName:
+    21300000: LaweaSalchichonTiles_0
+    21300002: LaweaSalchichonTiles_1
+    21300004: LaweaSalchichonTiles_2
+    21300006: LaweaSalchichonTiles_3
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -133,7 +125,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ec31d94d7dc32cf478bad6b063eb48b0
-      internalID: -1398648523504860632
       vertices: []
       indices: 
       edges: []
@@ -154,7 +145,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2060b2b4a008ca747bd5718cf6f3aa03
-      internalID: -4031992053832554035
       vertices: []
       indices: 
       edges: []
@@ -175,7 +165,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3edf8d313bef4ed42b2a61518728cfca
-      internalID: -7488079819383507604
       vertices: []
       indices: 
       edges: []
@@ -196,7 +185,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c471ec07fbdb1e748bb8c2e16b183655
-      internalID: -8385529190830335010
       vertices: []
       indices: 
       edges: []
@@ -205,12 +193,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: cdecde76253d401429c78c2c91a1c113
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
